@@ -61,8 +61,19 @@ h2, h3, h4 {
 
 .sidebar-nav li {
   padding: 12px 20px;
-  cursor: not-allowed;
+  cursor: pointer;
   opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.sidebar-nav li:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-nav li.active {
+  font-weight: 600;
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 /* Main content */
