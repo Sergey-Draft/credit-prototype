@@ -17,7 +17,7 @@ export default function App() {
         amount: formData.amount,
         term: formData.term,
         rate: "12%",
-        payment: "10 500 ₽",
+        payment: "10 500",
         earlyRepayment: "Да",
         effectiveRate: "17%",
         schedule: "aннуитет"
@@ -29,7 +29,7 @@ export default function App() {
         amount: formData.amount,
         term: formData.term,
         rate: "13%",
-        payment: "10 800 ₽",
+        payment: "10 800",
         earlyRepayment: "Нет",
         effectiveRate: "16%",
         schedule: "aннуитет"
@@ -41,7 +41,7 @@ export default function App() {
         amount: formData.amount,
         term: formData.term,
         rate: "11.5%",
-        payment: "10 300 ₽",
+        payment: "10 300",
         earlyRepayment: "Да",
         effectiveRate: "17%",
         schedule: "aннуитет"
@@ -53,7 +53,7 @@ export default function App() {
         amount: formData.amount,
         term: formData.term,
         rate: "10.9%",
-        payment: "10 150 ₽",
+        payment: "10 150",
         earlyRepayment: "Да",
         effectiveRate: "16.5%",
         schedule: "аннуитет"
@@ -65,7 +65,7 @@ export default function App() {
         amount: formData.amount,
         term: formData.term,
         rate: "14%",
-        payment: "11 050 ₽",
+        payment: "11 050",
         earlyRepayment: "Нет",
         effectiveRate: "18.2%",
         schedule: "аннуитет"
@@ -77,7 +77,7 @@ export default function App() {
         amount: formData.amount,
         term: formData.term,
         rate: "12.5%",
-        payment: "10 600 ₽",
+        payment: "10 600",
         earlyRepayment: "Да",
         effectiveRate: "17.1%",
         schedule: "аннуитет"
@@ -89,7 +89,7 @@ export default function App() {
         amount: formData.amount,
         term: formData.term,
         rate: "15%",
-        payment: "11 300 ₽",
+        payment: "11 300",
         earlyRepayment: "Нет",
         effectiveRate: "19.0%",
         schedule: "аннуитет"
@@ -101,7 +101,7 @@ export default function App() {
         amount: formData.amount,
         term: formData.term,
         rate: "9.8%",
-        payment: "9 950 ₽",
+        payment: "9 950",
         earlyRepayment: "Да",
         effectiveRate: "15.4%",
         schedule: "аннуитет"
@@ -113,7 +113,7 @@ export default function App() {
         amount: formData.amount,
         term: formData.term,
         rate: "13.2%",
-        payment: "10 900 ₽",
+        payment: "10 900",
         earlyRepayment: "Да",
         effectiveRate: "17.6%",
         schedule: "аннуитет"
@@ -125,7 +125,7 @@ export default function App() {
         amount: formData.amount,
         term: formData.term,
         rate: "11.7%",
-        payment: "10 420 ₽",
+        payment: "10 420",
         earlyRepayment: "Нет",
         effectiveRate: "16.9%",
         schedule: "аннуитет"
