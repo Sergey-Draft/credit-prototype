@@ -73,7 +73,7 @@ export default function App() {
       {
         id: 6,
         name: "ФинТек Про",
-        logo: "https://logo.clearbit.com/fintechpro.ru",
+        logo: "https://foranx.com/wp-content/uploads/2022/08/145_2.svg",
         amount: formData.amount,
         term: formData.term,
         rate: "12.5%",
@@ -109,7 +109,7 @@ export default function App() {
       {
         id: 9,
         name: "GreenBank",
-        logo: "https://logo.clearbit.com/greenbank.ru",
+        logo: "https://foranx.com/wp-content/uploads/2022/08/145_2.svg",
         amount: formData.amount,
         term: formData.term,
         rate: "13.2%",
@@ -121,7 +121,7 @@ export default function App() {
       {
         id: 10,
         name: "ТехноКапитал",
-        logo: "https://logo.clearbit.com/technocapital.ru",
+        logo: "https://foranx.com/wp-content/uploads/2022/08/145_2.svg",
         amount: formData.amount,
         term: formData.term,
         rate: "11.7%",
