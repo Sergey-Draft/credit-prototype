@@ -31,7 +31,7 @@ export default function App() {
         rate: "13%",
         payment: "10 800 ₽",
         earlyRepayment: "Нет",
-        effectiveRate: "17%",
+        effectiveRate: "16%",
         schedule: "aннуитет"
       },
       {
@@ -49,7 +49,7 @@ export default function App() {
       {
         id: 4,
         name: "НоваБанк",
-        logo: "https://logo.clearbit.com/nova-bank.ru",
+        logo: "https://logo.clearbit.com/alfabank.ru",
         amount: formData.amount,
         term: formData.term,
         rate: "10.9%",
@@ -61,7 +61,7 @@ export default function App() {
       {
         id: 5,
         name: "КредитКвартал",
-        logo: "https://logo.clearbit.com(kreditkvartal.ru)",
+        logo: "https://logo.clearbit.com/alfabank.ru",
         amount: formData.amount,
         term: formData.term,
         rate: "14%",
@@ -85,7 +85,7 @@ export default function App() {
       {
         id: 7,
         name: "Мегакредит",
-        logo: "https://logo.clearbit.com/megacredit.ru",
+        logo: "https://logo.clearbit.com/alfabank.ru",
         amount: formData.amount,
         term: formData.term,
         rate: "15%",

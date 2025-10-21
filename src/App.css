@@ -147,7 +147,6 @@ h2, h3, h4 {
   width: 28%;
   border-radius: 10px;
   padding: 20px;
-  color:rgba(65, 62, 62, 0.05);
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
 
@@ -180,14 +179,14 @@ h2, h3, h4 {
 }
 
 .card-footer button {
-  background-color: #36f1fb;
+  background-color:  #007eff;
   border: none;
-  color: #000;
+  color: #ffffff;
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .card-footer button:hover {
-  background-color: #24d9e3;
+  background-color: #005fd6;
 }
