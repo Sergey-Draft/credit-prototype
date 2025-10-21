@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar2342";
 import CreditForm from "./CreditForm";
 import BankCard from "./BankCredit";
 
