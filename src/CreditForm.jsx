@@ -20,12 +20,12 @@ export default function CreditForm({ onSearch }) {
   return (
     <form className="credit-form" onSubmit={handleSubmit}>
       <label htmlFor="target">
-        Цель кредита:
+        Тип кредита:
         <select id="target" value={goal} onChange={(e) => setGoal(e.target.value)} required>
           <option value="">Выберите цель</option>
-          <option>Ремонт</option>
-          <option>Путешествие</option>
-          <option>Покупка авто</option>
+          <option>Потребительский кредит</option>
+          <option>Автокредит</option>
+          <option>Микрокредит</option>
         </select>
       </label>
 
