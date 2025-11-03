@@ -1,27 +1,27 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react';
 
 export default function CreditForm({ onSearch }) {
-  const [goal, setGoal] = useState("");
-  const [amount, setAmount] = useState("");
-  const [term, setTerm] = useState("");
+  const [goal, setGoal] = useState('');
+  const [amount, setAmount] = useState('');
+  const [term, setTerm] = useState('');
   const [agreeFSZN, setAgreeFSZN] = useState(false);
   const [agreeData, setAgreeData] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!agreeFSZN || !agreeData) {
-      alert("Для продолжения необходимо согласие на обработку данных.");
+      alert('Для продолжения необходимо согласие на обработку данных.');
       return;
     }
     onSearch({ goal, amount, term });
   };
 
   return (
-    <>
     <form className="credit-form" onSubmit={handleSubmit}>
-      <label>
+      <label htmlFor="target">
         Цель кредита:
-        <select value={goal} onChange={(e) => setGoal(e.target.value)} required>
+        <select id="target" value={goal} onChange={(e) => setGoal(e.target.value)} required>
           <option value="">Выберите цель</option>
           <option>Ремонт</option>
           <option>Путешествие</option>
@@ -29,10 +29,11 @@ export default function CreditForm({ onSearch }) {
         </select>
       </label>
 
-      <label>
+      <label htmlFor="sum">
         Сумма кредита:
         <input
-          type="number"
+          id="sum"
+          type="sum"
           placeholder="Введите сумму"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
@@ -40,9 +41,10 @@ export default function CreditForm({ onSearch }) {
         />
       </label>
 
-      <label>
+      <label htmlFor="term">
         Срок кредита (мес):
         <input
+          id="term"
           type="number"
           placeholder="Введите срок"
           value={term}
@@ -51,33 +53,29 @@ export default function CreditForm({ onSearch }) {
         />
       </label>
       <div className="button-container">
-      <button type="submit">Подобрать</button>
+        <button type="submit">Подобрать</button>
       </div>
 
       <div className="checkboxes">
-        <label>
+        <label htmlFor="fszn">
           <input
+            id="fszn"
             type="checkbox"
             checked={agreeFSZN}
             onChange={(e) => setAgreeFSZN(e.target.checked)}
-          />{" "}
+          />{' '}
           Соглашение на получение данных ФСЗН
         </label>
-        <label>
+        <label htmlFor="personal">
           <input
+            id="personal"
             type="checkbox"
             checked={agreeData}
             onChange={(e) => setAgreeData(e.target.checked)}
-          />{" "}
+          />{' '}
           Согласие на обработку персональных данных
         </label>
       </div>
-
     </form>
-
-
-
-
-    </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 export default function BankCard({ bank }) {
   const [compare, setCompare] = useState(false);
@@ -10,24 +10,39 @@ export default function BankCard({ bank }) {
         <h4>{bank.name}</h4>
       </div>
       <div className="card-body">
-        <p><strong>Сумма:</strong> {bank.amount} </p>
-        <p><strong>Срок:</strong> {bank.term} мес</p>
-        <p><strong>Ставка:</strong> {bank.rate}</p>
-        <p><strong>Ежемесячный платёж:</strong> {bank.payment}</p>
-        <p><strong>Досрочное погашение:</strong> {bank.earlyRepayment}</p>
-        <p><strong>Эффективная % ставка:</strong> {bank.effectiveRate}</p>
-        <p><strong>График погашения:</strong> {bank.schedule}</p>
+        <p>
+          <strong>Сумма:</strong> {bank.amount}{' '}
+        </p>
+        <p>
+          <strong>Срок:</strong> {bank.term} мес
+        </p>
+        <p>
+          <strong>Ставка:</strong> {bank.rate}
+        </p>
+        <p>
+          <strong>Ежемесячный платёж:</strong> {bank.payment}
+        </p>
+        <p>
+          <strong>Досрочное погашение:</strong> {bank.earlyRepayment}
+        </p>
+        <p>
+          <strong>Эффективная % ставка:</strong> {bank.effectiveRate}
+        </p>
+        <p>
+          <strong>График погашения:</strong> {bank.schedule}
+        </p>
       </div>
       <div className="card-footer">
-        <label>
+        <label htmlFor="compare">
           <input
+            id="compare"
             type="checkbox"
             checked={compare}
             onChange={(e) => setCompare(e.target.checked)}
-          />{" "}
+          />{' '}
           Добавить в сравнение
         </label>
-        <button>Выбрать</button>
+        <button type="button">Выбрать</button>
       </div>
     </div>
   );
