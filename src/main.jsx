@@ -8,23 +8,24 @@ import theme from '../utils/theme/Theme';
 import store from '../RTK/index';
 
 async function initializeMocks() {
-  if (import.meta.env.MODE === 'development') {
+  if (import.meta.env.MODE === 'development' || import.meta.env.MODE === 'production') {
     const { worker } = await import('./mocks/browser');
     await worker.start({
       serviceWorker: {
         url: '/mockServiceWorker.js',
       },
+      onUnhandledRequest: 'bypass',
     });
   }
 }
 
-initializeMocks();
-
-createRoot(document.getElementById('root')).render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </ThemeProvider>,
-);
+initializeMocks().then(() => {
+  createRoot(document.getElementById('root')).render(
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ThemeProvider>,
+  );
+});
