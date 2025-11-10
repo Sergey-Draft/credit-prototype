@@ -14,11 +14,16 @@ const userSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
       localStorage.setItem('token', action.payload.token);
+      // Сохраняем данные пользователя для восстановления при перезагрузке
+      if (action.payload.user) {
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
+      }
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
     },
   },
 });

@@ -57,6 +57,7 @@ module.exports = {
     'jsx-a11y/no-noninteractive-element-interactions': 'off',
     "react/function-component-definition": 'off',
     "jsx-a11y/anchor-is-valid": "off",
+    "no-nested-ternary": "off"
   },
   settings: {
     "import/resolver": {

@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { Container, Box, Typography, Alert } from '@mui/material';
 import BankCard from '../BankCredit';
 import CreditForm from '../CreditForm';
-import Sidebar from '../Sidebar2342';
+
+const getUserData = () => {
+  const userData = localStorage.getItem('user');
+  return userData ? JSON.parse(userData) : null;
+};
 
 const SearchPage = () => {
   const [results, setResults] = useState([]);
-  const userData = useSelector((state) => state.user);
+  const location = useLocation();
+  const userData = getUserData();
+  const selectedBank = location.state?.selectedBank;
+
   console.log('userData', userData);
 
+  useEffect(() => {
+    if (selectedBank) {
+      // Можно показать уведомление о выбранном банке
+    }
+  }, [selectedBank]);
+
   const handleSearch = (formData) => {
-    setResults([
+    let allBanks = [
       {
         id: 1,
         name: 'Сбербанк',
@@ -131,39 +146,83 @@ const SearchPage = () => {
         effectiveRate: '16.9%',
         schedule: 'аннуитет',
       },
-    ]);
+    ];
+
+    // Если выбран конкретный банк, фильтруем результаты
+    if (selectedBank) {
+      allBanks = allBanks.filter((bank) => bank.name === selectedBank);
+    }
+
+    setResults(allBanks);
   };
 
   return (
-    <div className="app-layout">
-      <main className="main-content">
-        <div className="user-info">
-          <p>
-            <strong>ПИНФЛ:</strong> {userData.user?.pinfl}
-          </p>
-          <p>
-            <strong>Адрес регистрации:</strong> г. Минск, ул. Победителей, 10
-          </p>
-          <p>
-            <strong>Телефон:</strong> {userData.user?.phone}
-          </p>
-        </div>
+    <Container maxWidth="xl" sx={{ py: 4 }}>
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4" gutterBottom fontWeight="bold">
+          Поиск кредитов
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          Подберите кредит по вашим параметрам
+        </Typography>
+      </Box>
+
+      {selectedBank && (
+        <Alert severity="info" sx={{ mb: 3 }}>
+          Вы ищете кредиты в банке: <strong>{selectedBank}</strong>
+        </Alert>
+      )}
+
+      <Box sx={{ mb: 4 }}>
+        <Box
+          sx={{
+            p: 2,
+            bgcolor: 'background.paper',
+            borderRadius: 2,
+            mb: 3,
+            border: '1px solid',
+            borderColor: 'divider',
+          }}
+        >
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            <strong>Личный номер:</strong>{' '}
+            {userData?.personal_number || userData.user?.personal_number || 'Не указан'}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            <strong>Адрес регистрации:</strong>{' '}
+            {userData.user?.address || 'г. Минск, ул. Победителей, 10'}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <strong>Телефон:</strong> {userData?.phone || 'Не указан'}
+          </Typography>
+        </Box>
 
         <CreditForm onSearch={handleSearch} />
+      </Box>
 
-        {results.length > 0 && (
-          <div className="results">
-            <h3>Результат скоринга: {results.length}</h3>
-            <div className="cards">
-              {results.map((bank) => (
-                <BankCard key={bank.id} bank={bank} />
-              ))}
-            </div>
-          </div>
-        )}
-      </main>
-      <Sidebar />
-    </div>
+      {results.length > 0 && (
+        <Box>
+          <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+            Результаты поиска: {results.length} предложений
+          </Typography>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: '1fr',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
+              },
+              gap: 3,
+            }}
+          >
+            {results.map((bank) => (
+              <BankCard key={bank.id} bank={bank} />
+            ))}
+          </Box>
+        </Box>
+      )}
+    </Container>
   );
 };
 

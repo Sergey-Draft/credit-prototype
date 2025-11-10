@@ -19,7 +19,7 @@ import MessageModal from '../components/MessageModal';
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
-    pinfl: '',
+    personal_number: '',
     phone: '',
     email: '',
     fszn: false,
@@ -39,7 +39,7 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!form.pinfl || !form.phone || !form.password || !form.passport) {
+    // if (!form.personal_number || !form.phone || !form.password || !form.passport) {
     //   setMessage('Пожалуйста, заполните обязательные поля');
     //   console.log(form);
     //   return;
@@ -62,8 +62,11 @@ export default function RegisterPage() {
       }, 1000);
     } catch (err) {
       setLoading(false);
-      setRequestMessage('❌ Ошибка при регистрации. Попробуйте еще раз');
+      setRequestMessage(
+        `❌ Ошибка при регистрации. Попробуйте еще раз. / ${err?.response?.data?.message}`,
+      );
       setOpen(true);
+      console.log('ERR', err);
     }
   };
 
@@ -97,8 +100,8 @@ export default function RegisterPage() {
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
-            label="ПИНФЛ"
-            name="pinfl"
+            label="Личный номер"
+            name="personal_number"
             margin="normal"
             type="number"
             onChange={handleChange}

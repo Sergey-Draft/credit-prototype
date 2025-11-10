@@ -700,6 +700,38 @@
     prop-types "^15.8.1"
     react-is "^19.1.1"
 
+"@mui/x-data-grid@^8.16.0":
+  version "8.16.0"
+  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-8.16.0.tgz#c054eeb50f6702e310e825b5ad2edc0536e3fd42"
+  integrity sha512-yJ+v+E1yI1HxrEUdOfgrUTCxobAFvotGggU6cy6MnM7c7/TPPg9d5mDzjzxb0imOCJ6WyiM/vtd5WKbY/5sUNw==
+  dependencies:
+    "@babel/runtime" "^7.28.4"
+    "@mui/utils" "^7.3.3"
+    "@mui/x-internals" "8.16.0"
+    "@mui/x-virtualizer" "0.2.6"
+    clsx "^2.1.1"
+    prop-types "^15.8.1"
+    use-sync-external-store "^1.6.0"
+
+"@mui/x-internals@8.16.0":
+  version "8.16.0"
+  resolved "https://registry.yarnpkg.com/@mui/x-internals/-/x-internals-8.16.0.tgz#777196e3bfef1085d098870b125bf7932bf64483"
+  integrity sha512-JR53WOFqmQYQzurOpB0H91K7/9uMcte1ooxHxTLGB+97PgB+rKY6siRWvUALGS56XyPV+1a2ALI33hd2E7+Rgg==
+  dependencies:
+    "@babel/runtime" "^7.28.4"
+    "@mui/utils" "^7.3.3"
+    reselect "^5.1.1"
+    use-sync-external-store "^1.6.0"
+
+"@mui/x-virtualizer@0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@mui/x-virtualizer/-/x-virtualizer-0.2.6.tgz#93951f597dc79ac3bff86948ce370cfa7f3a7110"
+  integrity sha512-t45EHhD9kStSwIYMkqYYQIFbZNVQws9LRANktf0e/+j+MxsRTFk41r0rgiazMSOSugJlCuSh/H8xUUuMCZdtow==
+  dependencies:
+    "@babel/runtime" "^7.28.4"
+    "@mui/utils" "^7.3.3"
+    "@mui/x-internals" "8.16.0"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -2984,7 +3016,7 @@ require-directory@^2.1.1:
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
   integrity sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==
 
-reselect@^5.1.0:
+reselect@^5.1.0, reselect@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/reselect/-/reselect-5.1.1.tgz#c766b1eb5d558291e5e550298adb0becc24bb72e"
   integrity sha512-K/BG6eIky/SBpzfHZv/dd+9JBFiS4SWV7FIujVyJRux6e45+73RaUHXLmIR1f7WOMaQ0U1km6qwklRQxpJJY0w==
@@ -3478,7 +3510,7 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-use-sync-external-store@^1.4.0:
+use-sync-external-store@^1.4.0, use-sync-external-store@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.6.0.tgz#b174bfa65cb2b526732d9f2ac0a408027876f32d"
   integrity sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==

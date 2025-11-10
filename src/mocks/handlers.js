@@ -1,15 +1,15 @@
 import { http, HttpResponse } from 'msw';
 
-const users = [];
+export const users = [];
 
 export const handlers = [
   http.post('/api/register', async ({ request }) => {
     console.log(users);
     const body = await request.json();
-    const { email } = body;
+    const { personal_number } = body;
 
-    if (users.find((u) => u.email === email)) {
-      return HttpResponse.json({ message: 'Пользователь уже существует' }, { status: 400 });
+    if (users.find((u) => u.personal_number === personal_number)) {
+      return HttpResponse.json({ message: 'Пользователь с таким номером уже существует' }, { status: 400 });
     }
 
     users.push({ ...body });
@@ -19,13 +19,13 @@ export const handlers = [
 
   http.post('/api/login', async ({ request }) => {
     const body = await request.json();
-    const { email, password } = body;
+    const { personal_number, password } = body;
     console.log('body', body);
-    console.log('email', email, 'password', password);
+    console.log('personal_number', personal_number, 'password', password);
 
-    const user = users.find((u) => u.email === email && u.password === password);
+    const user = users.find((u) => u.personal_number === personal_number && u.password === password);
     if (!user) {
-      return HttpResponse.json({ message: 'Неверный email или пароль' }, { status: 401 });
+      return HttpResponse.json({ message: 'Неверный личный номер или пароль' }, { status: 401 });
     }
 
     const fakeToken = `jwt-${Math.random().toString(36).substring(2, 15)}`;
@@ -33,10 +33,12 @@ export const handlers = [
     return HttpResponse.json({
       token: fakeToken,
       user: {
-        pinfl: user.pinfl,
+        personal_number: user.personal_number,
         email: user.email,
         password: user.password,
         phone: user.phone,
+        address: user.address || 'г. Минск, ул. Победителей, 10',
+        fullName: user.fullName || 'Александр Иванов',
       },
     });
   }),
