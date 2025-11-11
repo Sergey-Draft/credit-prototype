@@ -19,20 +19,40 @@ h4 {
 
 .app-layout {
   display: grid;
-  grid-template-columns: 10fr 2fr;
-  min-height: 100vh;
-  width: 100vw;
+  grid-template-columns: 250px 1fr;
+  height: 100vh;
+  background-color: #f5f6fa;
 }
 
-/* Sidebar */
 .sidebar {
-  /* width: 220px; */
-  background: linear-gradient(180deg, #007eff, #36f1fb);
+  background-color: #404E67;
   color: white;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-top: 30px;
+  overflow-y: auto;
+}
+
+.main-wrapper {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow: hidden;
+}
+
+.header {
+  background-color: #ffffff;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  z-index: 1;
+}
+
+.main-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+  background-color: #f9fafb;
 }
 
 .user-block {
@@ -61,25 +81,27 @@ h4 {
 .sidebar-nav ul {
   list-style: none;
   padding: 0;
-  margin-top: 30px;
-  width: 100%;
+  margin: 0;
 }
 
 .sidebar-nav li {
-  padding: 12px 20px;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  opacity: 0.8;
-  transition: all 0.2s ease;
+  color: #dcdcdc;
+  font-weight: 500;
+  transform: scale(1);
+  transition: all .2s ease-out;
 }
 
 .sidebar-nav li:hover {
-  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+
 }
 
 .sidebar-nav li.active {
-  font-weight: 600;
-  opacity: 1;
-  transform: scale(1.1);
+  color: #fe8a7d;
+  transform: scale(1.03);
 }
 
 /* Main content */

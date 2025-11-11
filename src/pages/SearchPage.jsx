@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { Container, Box, Typography, Alert } from '@mui/material';
+import { Container, Box, Typography, Alert, Paper } from '@mui/material';
 import BankCard from '../BankCredit';
 import CreditForm from '../CreditForm';
 
@@ -157,14 +157,14 @@ const SearchPage = () => {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '20px' }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" gutterBottom fontWeight="bold">
-          Поиск кредитов
+          Поиск кредита по параметрам
         </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Подберите кредит по вашим параметрам
-        </Typography>
+        {/* <Typography variant="body1" color="text.secondary">
+          Все ваши заявки на получение кредита
+        </Typography> */}
       </Box>
 
       {selectedBank && (
@@ -222,7 +222,7 @@ const SearchPage = () => {
           </Box>
         </Box>
       )}
-    </Container>
+    </Paper>
   );
 };
 

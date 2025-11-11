@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import {
-  Paper,
+  Box,
   TextField,
   Select,
   MenuItem,
@@ -10,7 +10,6 @@ import {
   Button,
   FormControlLabel,
   Checkbox,
-  Box,
   Grid,
   Typography,
 } from '@mui/material';
@@ -32,7 +31,7 @@ export default function CreditForm({ onSearch }) {
   };
 
   return (
-    <Paper elevation={2} sx={{ p: 3 }}>
+    <Box>
       <Typography variant="h6" gutterBottom fontWeight="bold">
         Параметры кредита
       </Typography>
@@ -114,6 +113,6 @@ export default function CreditForm({ onSearch }) {
           Подобрать кредит
         </Button>
       </form>
-    </Paper>
+    </Box>
   );
 }

@@ -44,14 +44,14 @@ export default function DashboardPage() {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '20px' }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" gutterBottom fontWeight="bold">
-          Добро пожаловать!
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
           Выберите банк или начните поиск кредита
         </Typography>
+        {/* <Typography variant="body1" color="text.secondary">
+          
+        </Typography> */}
       </Box>
 
       <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -262,6 +262,6 @@ export default function DashboardPage() {
           ))}
         </Grid>
       </Box>
-    </Container>
+    </Paper>
   );
 }

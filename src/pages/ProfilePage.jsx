@@ -83,29 +83,29 @@ export default function ProfilePage() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold">
-          Персональные данные
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Управление вашими личными данными
-        </Typography>
-      </Box>
+    <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '20px' }}>
+      <Box>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h4" gutterBottom fontWeight="bold">
+            Персональные данные
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Управление вашими личными данными
+          </Typography>
+        </Box>
 
-      {message.text && (
-        <Alert
-          severity={
-            message.type === 'success' ? 'success' : message.type === 'error' ? 'error' : 'info'
-          }
-          sx={{ mb: 3 }}
-          onClose={() => setMessage({ type: '', text: '' })}
-        >
-          {message.text}
-        </Alert>
-      )}
+        {message.text && (
+          <Alert
+            severity={
+              message.type === 'success' ? 'success' : message.type === 'error' ? 'error' : 'info'
+            }
+            sx={{ mb: 3 }}
+            onClose={() => setMessage({ type: '', text: '' })}
+          >
+            {message.text}
+          </Alert>
+        )}
 
-      <Paper elevation={2} sx={{ p: 4 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
           <Typography variant="h6" fontWeight="bold">
             Основная информация
@@ -202,7 +202,7 @@ export default function ProfilePage() {
             Изменить пароль
           </Button>
         </Box>
-      </Paper>
-    </Container>
+      </Box>
+    </Paper>
   );
 }

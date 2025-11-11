@@ -176,7 +176,7 @@ export default function HistoryPage() {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '20px' }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" gutterBottom fontWeight="bold">
           История обращений
@@ -186,59 +186,54 @@ export default function HistoryPage() {
         </Typography>
       </Box>
 
-      <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-        <TextField
-          fullWidth
-          placeholder="Поиск по банку, типу кредита, статусу..."
-          value={searchText}
-          onChange={handleSearch}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-          sx={{ mb: 2 }}
-        />
-      </Paper>
-
-      <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden' }}>
-        <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          getRowId={(row) => row.id}
-          autoHeight={false}
-          sx={{
-            height: 600,
-            width: '100%',
-            '& .MuiDataGrid-cell:focus': {
-              outline: 'none',
-            },
-            '& .MuiDataGrid-cell:focus-within': {
-              outline: 'none',
-            },
-            '& .MuiDataGrid-row:hover': {
-              backgroundColor: '#f5f5f5',
-            },
-            '& .MuiDataGrid-columnHeaders': {
-              backgroundColor: '#f5f5f5',
-              fontWeight: 'bold',
-            },
-            '& .MuiDataGrid-root': {
-              border: 'none',
-            },
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[5, 10, 25]}
-          disableRowSelectionOnClick
-          checkboxSelection={false}
-        />
-      </Paper>
+      <TextField
+        fullWidth
+        placeholder="Поиск по банку, типу кредита, статусу..."
+        value={searchText}
+        onChange={handleSearch}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+        sx={{ mb: 2 }}
+      />
+      <DataGrid
+        rows={filteredRows}
+        columns={columns}
+        getRowId={(row) => row.id}
+        autoHeight={false}
+        sx={{
+          height: 600,
+          width: '100%',
+          '& .MuiDataGrid-cell:focus': {
+            outline: 'none',
+          },
+          '& .MuiDataGrid-cell:focus-within': {
+            outline: 'none',
+          },
+          '& .MuiDataGrid-row:hover': {
+            backgroundColor: '#f5f5f5',
+          },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#f5f5f5',
+            fontWeight: 'bold',
+          },
+          '& .MuiDataGrid-root': {
+            border: 'none',
+          },
+        }}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 10 },
+          },
+        }}
+        pageSizeOptions={[5, 10, 25]}
+        disableRowSelectionOnClick
+        checkboxSelection={false}
+      />
 
       {filteredRows.length === 0 && (
         <Box sx={{ textAlign: 'center', py: 4 }}>
@@ -247,6 +242,6 @@ export default function HistoryPage() {
           </Typography>
         </Box>
       )}
-    </Container>
+    </Paper>
   );
 }

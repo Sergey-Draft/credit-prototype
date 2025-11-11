@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Paper, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 
 const loans = [
@@ -33,40 +33,30 @@ const columns = [
 
 export default function LoansPage() {
   return (
-    <div>
-      <Typography variant="h4" gutterBottom fontWeight="bold">
-        Кредиты пользователя
-      </Typography>
-
-      <Box
-        sx={{
-          height: 400,
-          width: '100%',
-          bgcolor: 'white',
-          boxShadow: 3,
-          borderRadius: 2,
-          p: 2,
-          mt: 2,
-        }}
-      >
-        <DataGrid
-          rows={loans}
-          columns={columns}
-          pageSize={5}
-          disableRowSelectionOnClick
-          getRowClassName={(params) =>
-            params.row.status === 'active' ? 'row-active' : 'row-closed'
-          }
-          sx={{
-            '& .row-active': {
-              bgcolor: 'rgba(0, 255, 0, 0.05)',
-            },
-            '& .row-closed': {
-              bgcolor: 'rgba(0, 0, 0, 0.04)',
-            },
-          }}
-        />
+    <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '20px' }}>
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4" gutterBottom fontWeight="bold">
+          Кредиты пользователя
+        </Typography>
+        {/* <Typography variant="body1" color="text.secondary">
+        </Typography> */}
       </Box>
-    </div>
+
+      <DataGrid
+        rows={loans}
+        columns={columns}
+        pageSize={5}
+        disableRowSelectionOnClick
+        getRowClassName={(params) => (params.row.status === 'active' ? 'row-active' : 'row-closed')}
+        sx={{
+          '& .row-active': {
+            bgcolor: 'rgba(0, 255, 0, 0.05)',
+          },
+          '& .row-closed': {
+            bgcolor: 'rgba(0, 0, 0, 0.04)',
+          },
+        }}
+      />
+    </Paper>
   );
 }
