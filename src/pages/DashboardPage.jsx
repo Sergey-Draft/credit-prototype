@@ -47,7 +47,7 @@ export default function DashboardPage() {
     <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '20px' }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" gutterBottom fontWeight="bold">
-          Выберите банк или начните поиск кредита
+          Выберите банк или начните поиск кредита!!
         </Typography>
         {/* <Typography variant="body1" color="text.secondary">
           
