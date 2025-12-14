@@ -11,22 +11,23 @@ const userSlice = createSlice({
   reducers: {
     loginSuccess: (state, action) => {
       console.log('ACTION', action);
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      localStorage.setItem('token', action.payload.token);
-      // Сохраняем данные пользователя для восстановления при перезагрузке
-      if (action.payload.user) {
-        localStorage.setItem('user', JSON.stringify(action.payload.user));
-      }
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+    },
+    saveUser: (state, action) => {
+      state.user = action.payload;
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
-      localStorage.removeItem('token');
+      state.accessToken = null;
+      state.refreshToken = null;
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
     },
   },
 });
 
-export const { loginSuccess, logout } = userSlice.actions;
+export const { loginSuccess, logout, saveUser } = userSlice.actions;
 export default userSlice.reducer;

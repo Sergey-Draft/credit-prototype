@@ -16,7 +16,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PercentIcon from '@mui/icons-material/Percent';
 
-export default function BankCard({ bank }) {
+export default function BankCardResults({ bank }) {
   const [compare, setCompare] = useState(false);
 
   return (

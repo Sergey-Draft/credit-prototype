@@ -1962,6 +1962,11 @@ fdir@^6.5.0:
   resolved "https://registry.yarnpkg.com/fdir/-/fdir-6.5.0.tgz#ed2ab967a331ade62f18d077dae192684d50d350"
   integrity sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==
 
+feather-icons-react@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/feather-icons-react/-/feather-icons-react-1.0.0.tgz#28abf68c95c3485eec78cb07a7e5503310b98e6d"
+  integrity sha512-i/kf9qDHGAGjqFnD7iEX85qV+aMENfaFXv4dKxFvFpUs4mOk0zF4FTNooCwOvlvqxSQz4ArZ8QFUyQD+geNxLQ==
+
 file-entry-cache@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-6.0.1.tgz#211b2dd9659cb0394b073e7323ac3c933d522027"

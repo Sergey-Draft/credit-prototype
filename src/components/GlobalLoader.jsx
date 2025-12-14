@@ -2,7 +2,7 @@ import { Box, CircularProgress, Backdrop } from '@mui/material';
 import React from 'react';
 
 const GlobalLoader = ({ loading, text }) => (
-  <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
+  <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.modal + 1 }} open={loading}>
     <Box
       sx={{
         display: 'flex',

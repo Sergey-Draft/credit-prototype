@@ -1,118 +1,127 @@
+/* eslint-disable react/no-children-prop */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import { Box, Button } from '@mui/material';
+import { ArrowRight } from 'feather-icons-react';
+import CreditModal from './components/CreditModal';
 import {
-  Box,
-  TextField,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Button,
-  FormControlLabel,
-  Checkbox,
-  Grid,
-  Typography,
-} from '@mui/material';
+  InputFilLabelled,
+  SelectFieldLabelled,
+  StyledButton,
+  ToggleField,
+} from './components/ReusableInputs/MainAppStyledElements';
 
 export default function CreditForm({ onSearch }) {
-  const [goal, setGoal] = useState('');
-  const [amount, setAmount] = useState('');
-  const [term, setTerm] = useState('');
-  const [agreeFSZN, setAgreeFSZN] = useState(false);
-  const [agreeData, setAgreeData] = useState(false);
+  const [realty, setRealty] = React.useState('yes');
+  const [car, setCar] = React.useState('yes');
+
+  const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
+
+  const initialState = {
+    creditType: '',
+    amount: '',
+    term: '',
+    warranty: '',
+    education: '',
+    martialStatus: '',
+    dependents: '',
+    realty: '',
+    car: '',
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!agreeFSZN || !agreeData) {
-      alert('Для продолжения необходимо согласие на обработку данных.');
-      return;
-    }
-    onSearch({ goal, amount, term });
+    onSearch({ goal: 'weqewq', amount: '123456', term: '12' });
   };
 
   return (
-    <Box>
-      <Typography variant="h6" gutterBottom fontWeight="bold">
-        Параметры кредита
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={3} sx={{ mb: 2, justifyContent: 'flex-start' }}>
-          <Grid item xs={12} md={4}>
-            <FormControl fullWidth required sx={{ minWidth: 200 }}>
-              <InputLabel id="target-label">Тип кредита</InputLabel>
-              <Select
-                labelId="target-label"
-                id="target"
-                value={goal}
-                label="Тип кредита"
-                onChange={(e) => setGoal(e.target.value)}
-                required
-                fullWidth
-              >
-                <MenuItem value="">Выберите цель</MenuItem>
-                <MenuItem value="Потребительский кредит">Потребительский кредит</MenuItem>
-                <MenuItem value="Автокредит">Автокредит</MenuItem>
-                <MenuItem value="Микрокредит">Микрокредит</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+    <>
+      <Box>
+        <form onSubmit={handleSubmit}>
+          <Box sx={{ display: 'flex', gap: 14, mb: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, width: '100%' }}>
+              <Box sx={{ flex: 1 }}>
+                <SelectFieldLabelled
+                  label="Вид кредита"
+                  options={['Потребительский кредит', 'Ипотека', 'Автокредит']}
+                />
+              </Box>
 
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              id="sum"
-              label="Сумма кредита (BYN)"
-              type="number"
-              placeholder="Введите сумму"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              required
-            />
-          </Grid>
+              <Box sx={{ flex: 1 }}>
+                <InputFilLabelled label="Сумма кредита (BYN)" />
+              </Box>
 
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              id="term"
-              label="Срок кредита (мес)"
-              type="number"
-              placeholder="Введите срок"
-              value={term}
-              onChange={(e) => setTerm(e.target.value)}
-              required
-            />
-          </Grid>
-        </Grid>
+              <Box sx={{ flex: 1 }}>
+                <InputFilLabelled label="Срок кредита" />
+              </Box>
 
-        <Box sx={{ mb: 2 }}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                id="fszn"
-                checked={agreeFSZN}
-                onChange={(e) => setAgreeFSZN(e.target.checked)}
+              <Box sx={{ flex: 1 }}>
+                <SelectFieldLabelled
+                  label="Тип обеспечения"
+                  options={['Без обеспечения', 'Поручитель', 'Залог']}
+                />
+              </Box>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              mb: 4,
+              backgroundColor: '#F1F0FF',
+              padding: '40px 60px',
+              margin: '0px -60px',
+              opacity: '100%',
+            }}
+          >
+            <Box className="block-title">Обязательная информация</Box>
+
+            <Box className="main-subtitle" sx={{ mb: 3, mt: 1 }}>
+              Укажите дополнительные данные для корректного поиска кредита
+            </Box>
+
+            <Box>
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <Box sx={{ flex: 0.2 }}>
+                  <SelectFieldLabelled
+                    label="Образование"
+                    options={['Высшее', 'Среднее', 'Среднеспециальное']}
+                  />
+                </Box>
+                <Box sx={{ flex: 0.2 }}>
+                  <SelectFieldLabelled
+                    label="Семейное положение"
+                    options={['Холост/Не замужем', 'Женат/Замужем']}
+                  />
+                </Box>
+                <Box sx={{ flex: 0.2 }}>
+                  <SelectFieldLabelled
+                    label="Количество иждивенцев"
+                    options={['Нет', '1', '2', '3']}
+                  />
+                </Box>
+              </Box>
+            </Box>
+
+            <Box sx={{ display: 'flex', gap: 4 }}>
+              <ToggleField label="Наличие недвижимости:" value={realty} onChange={setRealty} />
+              <ToggleField label="Наличие автомобиля:" value={car} onChange={setCar} />
+            </Box>
+
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <StyledButton
+                text={
+                  <>
+                    Продолжить&nbsp;
+                    <ArrowRight />
+                  </>
+                }
+                onClick={() => setOpenConfirmationModal(true)}
               />
-            }
-            label="Согласие на получение данных из ФСЗН"
-          />
-        </Box>
-        <Box sx={{ mb: 3 }}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                id="personal"
-                checked={agreeData}
-                onChange={(e) => setAgreeData(e.target.checked)}
-              />
-            }
-            label="Согласие на обработку персональных данных"
-          />
-        </Box>
-
-        <Button variant="contained" color="primary" type="submit" fullWidth size="large">
-          Подобрать кредит
-        </Button>
-      </form>
-    </Box>
+            </Box>
+          </Box>
+        </form>
+      </Box>
+      <CreditModal open={openConfirmationModal} onClose={() => setOpenConfirmationModal(false)} />
+    </>
   );
 }

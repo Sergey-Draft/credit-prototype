@@ -1,267 +1,253 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Container,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  CardActionArea,
-  Paper,
-  Chip,
-} from '@mui/material';
-import GradingIcon from '@mui/icons-material/Grading';
-import SearchIcon from '@mui/icons-material/Search';
-import PaymentsIcon from '@mui/icons-material/Payments';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { Container, Box, Typography, Alert, Paper } from '@mui/material';
+import BankCard from '../components/BankCardResults';
+import CreditForm from '../CreditForm';
+import getUserData from '../../utils/getUserData';
+import CreditOrganizations from '../components/CreditOrganizations';
+import BankCardResults from '../components/BankCardResults';
+import BankList from '../components/BankList';
+import LoanRequestCard from '../components/LoanRequestCard';
+import SimpleModal from '../components/SimpleModal';
 
-const banks = [
-  { id: 1, name: 'Сбербанк', logo: '/logo/sber.jpg', rating: 4.8, products: 12 },
-  { id: 2, name: 'Альфа-Банк', logo: '/logo/alfa.jpg', rating: 4.6, products: 10 },
-  { id: 3, name: 'Тинькофф', logo: '/logo/tinkof.jpg', rating: 4.7, products: 15 },
-  { id: 4, name: 'НоваБанк', logo: '/logo/novos.jpg', rating: 4.5, products: 8 },
-  { id: 5, name: 'КредитКвартал', logo: '/logo/credit.jpg', rating: 4.3, products: 6 },
-  { id: 6, name: 'ФинТек Про', logo: '/logo/fintech.jpg', rating: 4.4, products: 9 },
-  { id: 7, name: 'Мегакредит', logo: '/logo/mega.jpg', rating: 4.2, products: 7 },
-  { id: 8, name: 'ЭкспрессФин', logo: '/logo/express.jpg', rating: 4.9, products: 11 },
-  { id: 9, name: 'GreenBank', logo: '/logo/green.jpg', rating: 4.5, products: 8 },
-  { id: 10, name: 'ТехноКапитал', logo: '/logo/texno.jpg', rating: 4.4, products: 9 },
-];
+const DashboardPage = () => {
+  const [results, setResults] = useState([]);
+  const location = useLocation();
+  const userData = getUserData();
+  const selectedBank = location.state?.selectedBank;
 
-export default function DashboardPage() {
-  const navigate = useNavigate();
+  console.log('userData', userData);
 
-  // нужен ли поиск по банку?
-  //   const handleBankClick = (bank) => {
-  //     navigate('/search', { state: { selectedBank: bank.name } });
-  //   };
+  const [selected, setSelected] = useState(selectedBank);
+  const [children, setChildren] = useState(null);
+  const [open, setOpen] = useState(false);
+  const handleModalOpen = (source) => {
+    setOpen(true);
+    setChildren(source);
+  };
 
-  const stats = {
-    activeLoans: 2,
-    totalAmount: 18000,
-    applications: 5,
+  useEffect(() => {
+    if (selected) {
+      // Можно показать уведомление о выбранном банке
+    }
+  }, [selected]);
+
+  const loanRequests = [
+    {
+      id: 1,
+      status: 'awaiting_signature',
+      type: 'Потребительский кредит',
+      date: '19.11.2025 16:04:32',
+      amount: 100000,
+      term: 24,
+      rate: 19.58,
+      payment: 4532,
+      bankLogo: '/bank-logos/prior_bank.png',
+    },
+    {
+      id: 2,
+      status: 'approved',
+      type: 'Потребительский кредит',
+      date: '10.11.2025 14:21:10',
+      amount: 25000,
+      term: 36,
+      bankLogo: '/bank-logos/prior_bank.png',
+    },
+    {
+      id: 2,
+      status: 'processing',
+      type: 'Потребительский кредит',
+      date: '10.11.2025 14:21:10',
+      amount: 25000,
+      term: 36,
+      bankLogo: '/bank-logos/prior_bank.png',
+    },
+  ];
+
+  const handleSearch = (formData) => {
+    let allBanks = [
+      {
+        id: 1,
+        name: 'Сбербанк',
+        logo: '/logo/sber.jpg',
+        amount: formData.amount,
+        term: formData.term,
+        rate: '12%',
+        payment: '10 500',
+        earlyRepayment: 'Да',
+        effectiveRate: '17%',
+        schedule: 'aннуитет',
+      },
+      {
+        id: 2,
+        name: 'Альфа-Банк',
+        logo: '/logo/alfa.jpg',
+        amount: formData.amount,
+        term: formData.term,
+        rate: '13%',
+        payment: '10 800',
+        earlyRepayment: 'Нет',
+        effectiveRate: '16%',
+        schedule: 'aннуитет',
+      },
+      {
+        id: 3,
+        name: 'Тинькофф',
+        logo: '/logo/tinkof.jpg',
+        amount: formData.amount,
+        term: formData.term,
+        rate: '11.5%',
+        payment: '10 300',
+        earlyRepayment: 'Да',
+        effectiveRate: '17%',
+        schedule: 'aннуитет',
+      },
+      {
+        id: 4,
+        name: 'НоваБанк',
+        logo: '/logo/novos.jpg',
+        amount: formData.amount,
+        term: formData.term,
+        rate: '10.9%',
+        payment: '10 150',
+        earlyRepayment: 'Да',
+        effectiveRate: '16.5%',
+        schedule: 'аннуитет',
+      },
+      {
+        id: 5,
+        name: 'КредитКвартал',
+        logo: '/logo/credit.jpg',
+        amount: formData.amount,
+        term: formData.term,
+        rate: '14%',
+        payment: '11 050',
+        earlyRepayment: 'Нет',
+        effectiveRate: '18.2%',
+        schedule: 'аннуитет',
+      },
+      {
+        id: 6,
+        name: 'ФинТек Про',
+        logo: '/logo/fintech.jpg',
+        amount: formData.amount,
+        term: formData.term,
+        rate: '12.5%',
+        payment: '10 600',
+        earlyRepayment: 'Да',
+        effectiveRate: '17.1%',
+        schedule: 'аннуитет',
+      },
+      {
+        id: 7,
+        name: 'Мегакредит',
+        logo: '/logo/mega.jpg',
+        amount: formData.amount,
+        term: formData.term,
+        rate: '15%',
+        payment: '11 300',
+        earlyRepayment: 'Нет',
+        effectiveRate: '19.0%',
+        schedule: 'аннуитет',
+      },
+      {
+        id: 8,
+        name: 'ЭкспрессФин',
+        logo: '/logo/express.jpg',
+        amount: formData.amount,
+        term: formData.term,
+        rate: '9.8%',
+        payment: '9 950',
+        earlyRepayment: 'Да',
+        effectiveRate: '15.4%',
+        schedule: 'аннуитет',
+      },
+      {
+        id: 9,
+        name: 'GreenBank',
+        logo: '/logo/green.jpg',
+        amount: formData.amount,
+        term: formData.term,
+        rate: '13.2%',
+        payment: '10 900',
+        earlyRepayment: 'Да',
+        effectiveRate: '17.6%',
+        schedule: 'аннуитет',
+      },
+      {
+        id: 10,
+        name: 'ТехноКапитал',
+        logo: '/logo/texno.jpg',
+        amount: formData.amount,
+        term: formData.term,
+        rate: '11.7%',
+        payment: '10 420',
+        earlyRepayment: 'Нет',
+        effectiveRate: '16.9%',
+        schedule: 'аннуитет',
+      },
+    ];
+
+    if (selected) {
+      allBanks = allBanks.filter((bank) => bank.name === selected);
+    }
+
+    setResults(allBanks);
+  };
+
+  const handleBankReset = () => {
+    setSelected(null);
+    () => handleSearch;
   };
 
   return (
-    <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '20px' }}>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold">
-          Выберите банк или начните поиск кредита!!
-        </Typography>
-        {/* <Typography variant="body1" color="text.secondary">
-          
-        </Typography> */}
-      </Box>
-
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={4}>
-          <Paper
-            elevation={2}
-            sx={{
-              p: 3,
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              color: 'white',
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <GradingIcon sx={{ fontSize: 40 }} />
-              <Box>
-                <Typography variant="h4" fontWeight="bold">
-                  {stats.activeLoans}
-                </Typography>
-                <Typography variant="body2">Активных кредитов</Typography>
-              </Box>
-            </Box>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Paper
-            elevation={2}
-            sx={{
-              p: 3,
-              background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-              color: 'white',
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <SearchIcon sx={{ fontSize: 40 }} />
-              <Box>
-                <Typography variant="h4" fontWeight="bold">
-                  {stats.applications}
-                </Typography>
-                <Typography variant="body2">Заявок отправлено</Typography>
-              </Box>
-            </Box>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Paper
-            elevation={2}
-            sx={{
-              p: 3,
-              background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-              color: 'white',
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <PaymentsIcon sx={{ fontSize: 40 }} />
-              <Box>
-                <Typography variant="h4" fontWeight="bold">
-                  {stats.totalAmount.toLocaleString()}
-                </Typography>
-                <Typography variant="body2">общая сумма кредитов(BYN)</Typography>
-              </Box>
-            </Box>
-          </Paper>
-        </Grid>
-      </Grid>
-
-      {/* <Box sx={{ mb: 4 }}>
-        <Typography variant="h5" gutterBottom fontWeight="bold">
-          Быстрые действия
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-          <Chip
-            label="Найти кредит"
-            onClick={() => navigate('/search')}
-            sx={{ p: 2, fontSize: '1rem', cursor: 'pointer' }}
-            color="primary"
-          />
-          <Chip
-            label="Мои кредиты"
-            onClick={() => navigate('/loans')}
-            sx={{ p: 2, fontSize: '1rem', cursor: 'pointer' }}
-            color="primary"
-            variant="outlined"
-          />
-          <Chip
-            label="История"
-            onClick={() => navigate('/history')}
-            sx={{ p: 2, fontSize: '1rem', cursor: 'pointer' }}
-            color="primary"
-            variant="outlined"
-          />
+    <>
+      <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '20px 60px' }}>
+        <Box sx={{ mb: 3 }}>
+          <Box className="main-title">Подбор кредита</Box>
+          <Box className="main-subtitle">Укажите интересующие вас параметры подбора кредита</Box>
         </Box>
-      </Box> */}
 
-      <Box>
-        <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
-          Банки-партнёры
-        </Typography>
-        <Grid container spacing={3}>
-          {banks.map((bank) => (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              key={bank.id}
+        <CreditForm onSearch={handleSearch} />
+
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: '50px 0' }}>
+          {loanRequests.map((req) => (
+            <LoanRequestCard key={req.id} request={req} onSign={() => handleModalOpen(req)} />
+          ))}
+        </Box>
+
+        {results.length > 0 && (
+          <Box>
+            <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+              Результаты поиска: {results.length} предложений
+            </Typography>
+            <Box
               sx={{
-                display: 'flex',
-                minWidth: 0,
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: '1fr',
+                  sm: 'repeat(2, 1fr)',
+                  md: 'repeat(3, 1fr)',
+                },
+                gap: 3,
               }}
             >
-              <Card
-                elevation={3}
-                sx={{
-                  height: '100%',
-                  width: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
-                  '&:hover': {
-                    transform: 'translateY(-4px)',
-                    boxShadow: 6,
-                  },
-                }}
-              >
-                <CardActionArea
-                  //   onClick={() => handleBankClick(bank)}
-                  sx={{
-                    flexGrow: 1,
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <CardMedia
-                    component="div"
-                    sx={{
-                      height: 140,
-                      width: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backgroundColor: '#f5f5f5',
-                      p: 2,
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <Box
-                      component="img"
-                      src={bank.logo}
-                      alt={bank.name}
-                      sx={{
-                        maxWidth: '100%',
-                        maxHeight: '100%',
-                        width: 'auto',
-                        height: 'auto',
-                        objectFit: 'contain',
-                      }}
-                    />
-                  </CardMedia>
-                  <CardContent
-                    sx={{
-                      flexGrow: 1,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
-                      width: '100%',
-                      boxSizing: 'border-box',
-                    }}
-                  >
-                    <Typography
-                      variant="h6"
-                      component="div"
-                      fontWeight="bold"
-                      gutterBottom
-                      noWrap
-                      sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
-                    >
-                      {bank.name}
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        mt: 2,
-                        width: '100%',
-                      }}
-                    >
-                      <Chip
-                        label={`⭐ ${bank.rating}`}
-                        size="small"
-                        color="warning"
-                        sx={{ fontWeight: 'bold' }}
-                      />
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ whiteSpace: 'nowrap', ml: 1 }}
-                      >
-                        {bank.products} продуктов
-                      </Typography>
-                    </Box>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </Paper>
+              {results.map((bank) => (
+                <BankCardResults key={bank.id} bank={bank} />
+              ))}
+            </Box>
+          </Box>
+        )}
+
+        <BankList />
+      </Paper>
+
+      <SimpleModal open={open} onClose={() => setOpen(false)} title="Активный кредит">
+        <pre>{JSON.stringify(children, null, 2)}</pre>
+      </SimpleModal>
+    </>
   );
-}
+};
+
+export default DashboardPage;

@@ -9,12 +9,15 @@ import {
   Grid,
   Divider,
   Alert,
+  FormControl,
+  FormLabel,
 } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { loginSuccess } from '../../RTK/userSlice';
+import AvatarUploader from '../components/AavatarUploader';
 
 const getUserData = () => {
   const userData = localStorage.getItem('user');
@@ -33,6 +36,13 @@ export default function ProfilePage() {
     phone: userData?.phone || '',
     address: userData?.address || 'г. Минск, ул. Победителей, 10',
     fullName: userData?.fullName || 'Александр Иванов',
+    birdthDate: userData?.birdthDate || '',
+    city: userData?.city || '',
+    country: userData?.country || '',
+    pinfl: userData?.country || '1234567890',
+    passport: userData?.passport || 'MP1234567890',
+    issueDate: userData?.issueDate || '12 12 2020',
+    expiredDate: userData?.expiredDate || '12 12 2025',
   });
 
   const handleChange = (e) => {
@@ -70,6 +80,13 @@ export default function ProfilePage() {
       phone: userData?.phone || '',
       address: userData?.address || 'г. Минск, ул. Победителей, 10',
       fullName: userData?.fullName || 'Александр Иванов',
+      birdthDate: userData?.birdthDate || '',
+      city: userData?.city || '',
+      country: userData?.country || '',
+      pinfl: userData?.country || '1234567890',
+      passport: userData?.passport || 'MP1234567890',
+      issueDate: userData?.issueDate || '12 12 2020',
+      expiredDate: userData?.expiredDate || '12 12 2025',
     });
     setIsEditing(false);
     setMessage({ type: '', text: '' });
@@ -87,11 +104,11 @@ export default function ProfilePage() {
       <Box>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h4" gutterBottom fontWeight="bold">
-            Персональные данные
+            Личный кабинет
           </Typography>
-          <Typography variant="body1" color="text.secondary">
+          {/* <Typography variant="body1" color="text.secondary">
             Управление вашими личными данными
-          </Typography>
+          </Typography> */}
         </Box>
 
         {message.text && (
@@ -106,101 +123,306 @@ export default function ProfilePage() {
           </Alert>
         )}
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography variant="h6" fontWeight="bold">
-            Основная информация
-          </Typography>
-          {!isEditing ? (
-            <Button variant="contained" startIcon={<EditIcon />} onClick={() => setIsEditing(true)}>
-              Редактировать
-            </Button>
-          ) : (
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <Button
-                variant="contained"
-                color="success"
-                startIcon={<SaveIcon />}
-                onClick={handleSave}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: 10,
+            alignItems: 'flex-end',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Grid container spacing={3} sx={{ flexDirection: 'column', width: '40%' }}>
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
               >
-                Сохранить
-              </Button>
-              <Button variant="outlined" startIcon={<CancelIcon />} onClick={handleCancel}>
-                Отмена
-              </Button>
-            </Box>
-          )}
+                <FormLabel sx={{ width: 180 }}>ФИО</FormLabel>
+                <TextField
+                  fullWidth
+                  name="fullName"
+                  size="small"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  disabled={!isEditing}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
+              >
+                <FormLabel sx={{ width: 180 }}>Дата рождения</FormLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="birdthDate"
+                  type="date"
+                  value={formData.birdthDate}
+                  onChange={handleChange}
+                  disabled={!isEditing}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
+              >
+                <FormLabel sx={{ width: 180 }}>Мобильный телефон</FormLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  disabled={!isEditing}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
+              >
+                <FormLabel sx={{ width: 180 }}>Email</FormLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  disabled={!isEditing}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
+              >
+                <FormLabel sx={{ width: 180 }}>Адрес регистрации</FormLabel>
+                <TextField
+                  fullWidth
+                  name="address"
+                  size="small"
+                  value={formData.address}
+                  onChange={handleChange}
+                  disabled={!isEditing}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
+              >
+                <FormLabel sx={{ width: 180 }}>Город</FormLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="city"
+                  type="tel"
+                  value={formData.city}
+                  onChange={handleChange}
+                  disabled={!isEditing}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
+              >
+                <FormLabel sx={{ width: 180 }}>Страна</FormLabel>
+                <TextField
+                  fullWidth
+                  name="country"
+                  size="small"
+                  type="tel"
+                  value={formData.country}
+                  onChange={handleChange}
+                  disabled={!isEditing}
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+
+          <Grid
+            container
+            spacing={3}
+            sx={{ flexDirection: 'column', width: '35%', alignItems: 'center' }}
+          >
+            <div>
+              <AvatarUploader />
+            </div>
+
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
+              >
+                <FormLabel sx={{ width: 180 }}>ПИНФЛ</FormLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="personal_number"
+                  value={formData.pinfl}
+                  onChange={handleChange}
+                  disabled
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      bgcolor: isEditing ? 'background.paper' : 'action.disabledBackground',
+                    },
+                  }}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
+              >
+                <FormLabel sx={{ width: 180 }}>Паспорт</FormLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="personal_number"
+                  value={formData.passport}
+                  onChange={handleChange}
+                  disabled
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      bgcolor: isEditing ? 'background.paper' : 'action.disabledBackground',
+                    },
+                  }}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
+              >
+                <FormLabel sx={{ width: 180 }}>Дата выдачи</FormLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="personal_number"
+                  value={formData.issueDate}
+                  onChange={handleChange}
+                  disabled
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      bgcolor: isEditing ? 'background.paper' : 'action.disabledBackground',
+                    },
+                  }}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
+              >
+                <FormLabel sx={{ width: 180 }}>Срок действия</FormLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="personal_number"
+                  value={formData.expiredDate}
+                  onChange={handleChange}
+                  disabled
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      bgcolor: isEditing ? 'background.paper' : 'action.disabledBackground',
+                    },
+                  }}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <FormControl
+                fullWidth
+                sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}
+              >
+                <FormLabel sx={{ width: 180 }}>Дата регистрации</FormLabel>
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="personal_number"
+                  value={formData.registerDate}
+                  onChange={handleChange}
+                  disabled
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      bgcolor: isEditing ? 'background.paper' : 'action.disabledBackground',
+                    },
+                  }}
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
         </Box>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Личный номер"
-              name="personal_number"
-              value={formData.personal_number}
-              onChange={handleChange}
-              disabled
-              helperText="Личный номер нельзя изменить"
-              sx={{
-                '& .MuiInputBase-input': {
-                  bgcolor: isEditing ? 'background.paper' : 'action.disabledBackground',
-                },
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="ФИО"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Телефон"
-              name="phone"
-              type="tel"
-              value={formData.phone}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Адрес регистрации"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
-          </Grid>
-        </Grid>
-
         <Divider sx={{ my: 4 }} />
-
-        <Box>
-          <Typography variant="h6" fontWeight="bold" gutterBottom>
-            Безопасность
-          </Typography>
-          <Button variant="outlined" onClick={handleChangePassword} sx={{ mt: 2 }}>
-            Изменить пароль
-          </Button>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              mb: 3,
+            }}
+          >
+            <Typography variant="h6" fontWeight="bold" gutterBottom>
+              Безопасность
+            </Typography>
+            <Button variant="outlined" onClick={handleChangePassword} sx={{ mt: 2 }}>
+              Изменить пароль
+            </Button>
+          </Box>
+          <Box>
+            {/* <Typography variant="h6" fontWeight="bold">
+            Основная информация
+          </Typography> */}
+            {!isEditing ? (
+              <Button
+                variant="contained"
+                startIcon={<EditIcon />}
+                onClick={() => setIsEditing(true)}
+              >
+                Редактировать
+              </Button>
+            ) : (
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  startIcon={<SaveIcon />}
+                  onClick={handleSave}
+                >
+                  Сохранить
+                </Button>
+                <Button variant="outlined" startIcon={<CancelIcon />} onClick={handleCancel}>
+                  Отмена
+                </Button>
+              </Box>
+            )}
+          </Box>
         </Box>
       </Box>
     </Paper>

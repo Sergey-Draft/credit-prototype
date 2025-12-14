@@ -1,17 +1,11 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  Box,
-  List,
-  ListItemButton,
-  ListItemText,
-  Avatar,
-  Typography,
-  Divider,
-  Button,
-} from '@mui/material';
+import { Home, Search, CreditCard, User } from 'feather-icons-react';
+import { Box, Avatar, Typography, Divider, Button } from '@mui/material';
+import CalculateIcon from '@mui/icons-material/Calculate';
 import { logout } from '../RTK/userSlice';
+import LoanCalculator from './pages/CalculatorPage';
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -20,11 +14,17 @@ export default function Sidebar() {
   const userData = useSelector((state) => state.user);
 
   const menuItems = [
-    { label: 'Главная', path: '/dashboard' },
-    { label: 'Поиск кредитов', path: '/search' },
-    { label: 'Мои кредиты', path: '/loans' },
-    { label: 'История обращений', path: '/history' },
-    { label: 'Персональные данные', path: '/profile' },
+    { label: 'Главная', path: '/dashboard', icon: <Home size={16} /> },
+    { label: 'Поиск кредитов', path: '/search', icon: <Search size={16} /> },
+    { label: 'Мои кредиты', path: '/loans', icon: <CreditCard size={16} /> },
+    { label: 'История обращений', path: '/history', icon: <CreditCard size={16} /> },
+    { label: 'Персональные данные', path: '/profile', icon: <User size={16} /> },
+    {
+      label: 'Кредитный калькулятор',
+      path: '/calculator',
+      icon: <CalculateIcon fontSize="16px" />,
+    },
+    { label: 'апи', path: '/api-buttons', icon: <User size={16} /> },
   ];
 
   return (
@@ -56,7 +56,7 @@ export default function Sidebar() {
                 className={isActive ? 'active' : ''}
                 onClick={() => navigate(item.path)}
               >
-                {item.label}
+                {item.icon} {item.label}
               </li>
             );
           })}

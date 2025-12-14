@@ -1,18 +1,21 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import Sidebar from '../Sidebar2342';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export default function DashboardLayout() {
   return (
     <Box className="app-layout">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <Box className="main-wrapper">
         <Header />
-        <Box className="main-content">
-          <Outlet />
+        <Box className="app-container">
+          <Box className="main-content">
+            <Outlet />
+          </Box>
         </Box>
+        <Footer />
       </Box>
     </Box>
   );

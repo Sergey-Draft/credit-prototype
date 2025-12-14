@@ -3,32 +3,37 @@
 import React, { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginSuccess } from '../../RTK/userSlice';
+import { loginSuccess, saveUser } from '../../RTK/userSlice';
 
 export default function ProtectedRoute({ children }) {
   const dispatch = useDispatch();
   const location = useLocation();
-  const token = useSelector((state) => state.user.token);
-  const user = useSelector((state) => state.user.user);
+
+  const token = useSelector((state) => state.user.accessToken);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
+    const storedToken = localStorage.getItem('accessToken');
+    const storedUserRaw = localStorage.getItem('user');
+
     if (storedToken && !token) {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
+      let userData = null;
+      if (storedUserRaw) {
         try {
-          const userData = JSON.parse(storedUser);
-          dispatch(loginSuccess({ token: storedToken, user: userData }));
+          userData = JSON.parse(storedUserRaw);
         } catch (e) {
-          // Если не удалось восстановить, очищаем localStorage
-          localStorage.removeItem('token');
+          console.warn('Невалидный user в localStorage, очищаем только user (не токен).', e);
           localStorage.removeItem('user');
+          userData = null;
         }
+      }
+      dispatch(loginSuccess({ accessToken: storedToken }));
+      if (userData) {
+        dispatch(saveUser(userData));
       }
     }
   }, [token, dispatch]);
 
-  const hasToken = token || localStorage.getItem('token');
+  const hasToken = Boolean(token || localStorage.getItem('accessToken'));
 
   if (!hasToken) {
     return <Navigate to="/login" state={{ from: location }} replace />;

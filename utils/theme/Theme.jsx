@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#007eff',
+      main: '#2260BC',
     },
     secondary: {
       main: '#36f1fb',
@@ -30,12 +30,14 @@ const theme = createTheme({
           padding: 0,
           display: 'flex',
           flexDirection: 'column',
+          color: '#1A1A1A',
         },
         '#root': {
           height: '100%',
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
+          color: '#1A1A1A',
           background: 'radial-gradient(rgb(240, 247, 255), rgb(255, 255, 255))',
         },
       },
