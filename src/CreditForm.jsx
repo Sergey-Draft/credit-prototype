@@ -73,9 +73,11 @@ export default function CreditForm({ onSearch }) {
               opacity: '100%',
             }}
           >
-            <Box className="block-title">Обязательная информация</Box>
+            <Box className="block-title" sx={{ mb: '30px' }}>
+              Обязательная информация
+            </Box>
 
-            <Box className="main-subtitle" sx={{ mb: 3, mt: 1 }}>
+            <Box className="main-subtitle" sx={{ mb: '24px' }}>
               Укажите дополнительные данные для корректного поиска кредита
             </Box>
 
@@ -107,7 +109,7 @@ export default function CreditForm({ onSearch }) {
               <ToggleField label="Наличие автомобиля:" value={car} onChange={setCar} />
             </Box>
 
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '70px' }}>
               <StyledButton
                 text={
                   <>

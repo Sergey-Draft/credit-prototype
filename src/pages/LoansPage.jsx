@@ -33,11 +33,11 @@ const columns = [
 
 export default function LoansPage() {
   return (
-    <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '20px' }}>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" gutterBottom fontWeight="bold">
-          Кредиты пользователя
-        </Typography>
+    <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '80px 60px' }}>
+      <Box sx={{ mb: 3 }}>
+        <Box className="main-title" sx={{ mb: '30px' }}>
+          Мои кредиты
+        </Box>
         {/* <Typography variant="body1" color="text.secondary">
         </Typography> */}
       </Box>
@@ -50,7 +50,7 @@ export default function LoansPage() {
         getRowClassName={(params) => (params.row.status === 'active' ? 'row-active' : 'row-closed')}
         sx={{
           '& .row-active': {
-            bgcolor: 'rgba(0, 255, 0, 0.05)',
+            bgcolor: '#fff',
           },
           '& .row-closed': {
             bgcolor: 'rgba(0, 0, 0, 0.04)',

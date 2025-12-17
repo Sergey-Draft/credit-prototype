@@ -9,7 +9,14 @@ import {
   Button,
 } from '@mui/material';
 
-export const InputFilLabelled = ({ label, value, onChange, placeholder = '' }) => (
+export const InputFilLabelled = ({
+  label,
+  value,
+  onChange,
+  placeholder = '',
+  disabled = false,
+  name = 'defaultInput',
+}) => (
   <Box sx={{ display: 'flex', flexDirection: 'column', mb: 2 }}>
     <Typography
       sx={{
@@ -28,7 +35,9 @@ export const InputFilLabelled = ({ label, value, onChange, placeholder = '' }) =
       variant="outlined"
       placeholder={placeholder}
       value={value}
+      name={name}
       onChange={onChange}
+      disabled={disabled}
       InputLabelProps={{ shrink: false }}
       size="small"
       sx={{

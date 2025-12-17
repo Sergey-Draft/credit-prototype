@@ -1,15 +1,16 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Container, Box, Typography, Alert, Paper } from '@mui/material';
-import BankCard from '../components/BankCardResults';
 import CreditForm from '../CreditForm';
 import getUserData from '../../utils/getUserData';
 import CreditOrganizations from '../components/CreditOrganizations';
-import BankCardResults from '../components/BankCardResults';
 import BankList from '../components/BankList';
 import LoanRequestCard from '../components/LoanRequestCard';
 import SimpleModal from '../components/SimpleModal';
+import CreditResultCard from '../components/CreditResultCard';
+import { StyledButton } from '../components/ReusableInputs/MainAppStyledElements';
 
 const DashboardPage = () => {
   const [results, setResults] = useState([]);
@@ -20,11 +21,19 @@ const DashboardPage = () => {
   console.log('userData', userData);
 
   const [selected, setSelected] = useState(selectedBank);
+  const [selectedIds, setSelectedIds] = useState([]);
   const [children, setChildren] = useState(null);
   const [open, setOpen] = useState(false);
+  const [openCompare, setOpenCompare] = useState(false);
   const handleModalOpen = (source) => {
     setOpen(true);
     setChildren(source);
+  };
+
+  const toggleSelect = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id],
+    );
   };
 
   useEffect(() => {
@@ -34,29 +43,29 @@ const DashboardPage = () => {
   }, [selected]);
 
   const loanRequests = [
+    // {
+    //   id: 1,
+    //   status: 'awaiting_signature',
+    //   type: 'Потребительский кредит',
+    //   date: '19.11.2025 16:04:32',
+    //   amount: 100000,
+    //   term: 24,
+    //   rate: 19.58,
+    //   payment: 4532,
+    //   bankLogo: '/bank-logos/prior_bank.png',
+    // },
     {
       id: 1,
-      status: 'awaiting_signature',
+      status: 'in_progress',
       type: 'Потребительский кредит',
-      date: '19.11.2025 16:04:32',
-      amount: 100000,
-      term: 24,
-      rate: 19.58,
-      payment: 4532,
+      date: '10.11.2024 12:11:00',
+      amount: 23000,
+      term: 16,
       bankLogo: '/bank-logos/prior_bank.png',
     },
     {
       id: 2,
-      status: 'approved',
-      type: 'Потребительский кредит',
-      date: '10.11.2025 14:21:10',
-      amount: 25000,
-      term: 36,
-      bankLogo: '/bank-logos/prior_bank.png',
-    },
-    {
-      id: 2,
-      status: 'processing',
+      status: 'active',
       type: 'Потребительский кредит',
       date: '10.11.2025 14:21:10',
       amount: 25000,
@@ -64,6 +73,52 @@ const DashboardPage = () => {
       bankLogo: '/bank-logos/prior_bank.png',
     },
   ];
+
+  const serachResults = [
+    {
+      id: 1,
+      bank: 'Приорбанк',
+      title: 'Потребительский кредит',
+      logo: '/bank-logos/prior_bank.png',
+      rate: 15.8,
+      payment: 299,
+      amount: '10 000',
+      term: '5 лет',
+      tags: ['Дифференцированный график', 'На любые цели', 'Без обеспечения'],
+    },
+    {
+      id: 2,
+      bank: 'Приорбанк',
+      title: 'Потребительский кредит',
+      logo: '/bank-logos/prior_bank.png',
+      rate: 14.9,
+      payment: 290,
+      amount: '10 000',
+      term: '5 лет',
+      tags: ['Дифференцированный график', 'На любые цели', 'Без обеспечения'],
+    },
+    {
+      id: 3,
+      bank: 'Приорбанк',
+      title: 'Потребительский кредит',
+      logo: '/bank-logos/prior_bank.png',
+      rate: 15.8,
+      payment: 299,
+      amount: '10 000',
+      term: '5 лет',
+      tags: ['Дифференцированный график', 'На любые цели', 'Без обеспечения'],
+    },
+  ];
+
+  const selectedItems = React.useMemo(
+    () => serachResults.filter((item) => selectedIds.includes(item.id)),
+    [serachResults, selectedIds],
+  );
+
+  const handleCompareOpen = () => {
+    setOpenCompare(true);
+    console.log(selectedItems);
+  };
 
   const handleSearch = (formData) => {
     let allBanks = [
@@ -203,21 +258,51 @@ const DashboardPage = () => {
 
   return (
     <>
-      <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '20px 60px' }}>
+      <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '80px 60px' }}>
         <Box sx={{ mb: 3 }}>
-          <Box className="main-title">Подбор кредита</Box>
+          <Box className="main-title" sx={{ mb: '30px' }}>
+            Подбор кредита
+          </Box>
           <Box className="main-subtitle">Укажите интересующие вас параметры подбора кредита</Box>
         </Box>
 
         <CreditForm onSearch={handleSearch} />
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: '50px 0' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: '90px 0' }}>
+          <Box className="block-title" sx={{ mb: '20px' }}>
+            {' '}
+            Активный запрос{' '}
+          </Box>
           {loanRequests.map((req) => (
             <LoanRequestCard key={req.id} request={req} onSign={() => handleModalOpen(req)} />
           ))}
         </Box>
 
-        {results.length > 0 && (
+        <Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: '90px 0' }}>
+            <Box className="block-title" sx={{ mb: '20px' }}>
+              {' '}
+              Результаты поиска{' '}
+            </Box>
+            {serachResults.map((item, index) => (
+              <CreditResultCard
+                key={index}
+                item={item}
+                selected={selectedIds.includes(item.id)}
+                onSelect={() => toggleSelect(item.id)}
+                onSign={(data) => console.log('sign', data)}
+              />
+            ))}
+
+            <StyledButton
+              text="Сравнить кредитные условия"
+              variant="text"
+              onClick={handleCompareOpen}
+            />
+          </Box>
+        </Box>
+
+        {/* {results.length === 0 && (
           <Box>
             <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
               Результаты поиска: {results.length} предложений
@@ -238,13 +323,23 @@ const DashboardPage = () => {
               ))}
             </Box>
           </Box>
-        )}
+        )} */}
 
         <BankList />
       </Paper>
 
       <SimpleModal open={open} onClose={() => setOpen(false)} title="Активный кредит">
         <pre>{JSON.stringify(children, null, 2)}</pre>
+      </SimpleModal>
+
+      <SimpleModal
+        open={openCompare}
+        onClose={() => setOpenCompare(false)}
+        title="Сравнить варианты"
+      >
+        {selectedItems?.map((item) => (
+          <pre>{JSON.stringify(item, null, 2)}</pre>
+        ))}
       </SimpleModal>
     </>
   );

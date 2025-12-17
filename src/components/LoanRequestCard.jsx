@@ -2,17 +2,17 @@ import React from 'react';
 import { Box, Button, Typography, Divider } from '@mui/material';
 
 const statusMap = {
-  processing: {
-    label: 'В обработке',
-    color: '#007bff',
+  active: {
+    label: 'Активный',
+    color: '#009E2F',
   },
   awaiting_signature: {
     label: 'Ожидает подписания договора',
     color: '#fe8a7d',
   },
-  approved: {
-    label: 'Обработан',
-    color: '#28a745',
+  in_progress: {
+    label: 'В обработке',
+    color: '#2260BC',
   },
   rejected: {
     label: 'Отказано',
@@ -26,6 +26,7 @@ export default function LoanRequestCard({ request, onSign }) {
   return (
     <Box
       component="div"
+      onClick={() => onSign?.(request)}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       sx={{
@@ -37,6 +38,7 @@ export default function LoanRequestCard({ request, onSign }) {
         display: 'flex',
         alignItems: 'center',
         gap: 3,
+        cursor: 'pointer',
         boxShadow: '0px 1px 3px rgba(0,0,0,0.12), 0px 1px 2px rgba(0,0,0,0.24)',
       }}
     >
@@ -101,27 +103,13 @@ export default function LoanRequestCard({ request, onSign }) {
         <Typography
           sx={{
             color: status.color,
-            // fontWeight: 600,
-            fontSize: 16,
+            fontWeight: 500,
+            fontSize: 20,
             lineHeight: 1.2,
           }}
         >
           {status.label}
         </Typography>
-
-        {request.status === 'awaiting_signature' && (
-          <Button
-            variant="contained"
-            sx={{
-              mt: 1,
-              borderRadius: '20px',
-              textTransform: 'none',
-            }}
-            onClick={() => onSign?.(request)}
-          >
-            Подписать договор
-          </Button>
-        )}
       </Box>
     </Box>
   );

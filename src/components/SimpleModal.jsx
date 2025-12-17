@@ -10,7 +10,7 @@ const SimpleModal = ({ open, onClose, title, children, maxWidth = 'md' }) => (
     scroll="paper"
     sx={{
       '& .MuiDialog-paper': {
-        borderRadius: '16px',
+        borderRadius: '8px',
         padding: '8px',
       },
     }}
