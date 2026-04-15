@@ -9,7 +9,7 @@ const LocalSnackbar = ({ open, severity = 'info', message, handleClose }) => (
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      zIndex: 2000, // поверх формы, но не перекрывает Backdrop
+      zIndex: 2000,
     }}
   >
     <Snackbar

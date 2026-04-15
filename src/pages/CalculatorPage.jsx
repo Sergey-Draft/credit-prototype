@@ -16,9 +16,12 @@ import {
   Divider,
 } from '@mui/material';
 import SimpleModal from '../components/SimpleModal';
+import RouterBreadcrumbs from '../components/RouterBreadCrumbs';
+import { InputFilLabelled } from '../components/ReusableInputs/MainAppStyledElements';
+import { formatCurrency } from '../../utils/format';
 
 const LoanCalculator = () => {
-  const [price, setPrice] = useState('20000');
+  const [price, setPrice] = useState('1500');
   const [downPayment, setDownPayment] = useState('0');
   const [term, setTerm] = useState('36');
   const [rate, setRate] = useState('19');
@@ -82,81 +85,64 @@ const LoanCalculator = () => {
   const overpayment = totalPayment - loanAmount;
   return (
     <>
-      <Paper elevation={2} sx={{ width: '100%', overflow: 'hidden', padding: '20px' }}>
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="h4" gutterBottom fontWeight="bold">
-            Кредитный калькулятор
-          </Typography>
-          {/* <Typography variant="body1" color="text.secondary">
-          
-        </Typography> */}
+      <Paper
+        elevation={0}
+        sx={{ width: '100%', overflow: 'hidden', padding: '80px 60px', position: 'relative' }}
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '30px',
+            left: '60px',
+            zIndex: 1,
+          }}
+        >
+          <RouterBreadcrumbs />
         </Box>
+        <Box className="main-title" sx={{ mb: 2 }}>
+          Кредитный калькулятор
+        </Box>
+        <Box className="main-subtitle">Представленные данные носят информационный характер</Box>
 
         <Box className="loan-calculator">
           <Box className="form-grid">
-            <FormControl fullWidth>
-              <FormLabel>Стоимость, BYN</FormLabel>
-              <TextField
-                fullWidth
-                type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                variant="outlined"
-                size="small"
-              />
-            </FormControl>
+            <InputFilLabelled
+              label="Сумма кредита, BYN"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              fieldSx={{}}
+            />
 
-            <FormControl fullWidth>
-              <FormLabel>Первоначальный взнос, BYN</FormLabel>
-              <TextField
-                fullWidth
-                type="number"
-                value={downPayment}
-                onChange={(e) => setDownPayment(e.target.value)}
-                variant="outlined"
-                size="small"
-              />
-            </FormControl>
+            <InputFilLabelled
+              label="Срок кредита"
+              value={term}
+              onChange={(e) => setTerm(e.target.value)}
+            />
 
-            <FormControl fullWidth>
-              <FormLabel>Срок (мес)</FormLabel>
-              <TextField
-                fullWidth
-                type="number"
-                value={term}
-                onChange={(e) => setTerm(e.target.value)}
-                variant="outlined"
-                size="small"
-              />
-            </FormControl>
+            <InputFilLabelled
+              label="Первоначальный взнос"
+              value={downPayment}
+              onChange={(e) => setDownPayment(e.target.value)}
+            />
 
-            <FormControl fullWidth>
-              <FormLabel>Ставка, %</FormLabel>
-              <TextField
-                fullWidth
-                type="number"
-                value={rate}
-                onChange={(e) => setRate(e.target.value)}
-                variant="outlined"
-                size="small"
-              />
-            </FormControl>
+            <InputFilLabelled
+              label="Процентная ставка"
+              value={rate}
+              onChange={(e) => setRate(e.target.value)}
+            />
 
-            <FormControl fullWidth>
-              <FormLabel>Грейс-период (мес)</FormLabel>
-              <TextField
-                fullWidth
-                type="number"
-                value={grace}
-                onChange={(e) => setGrace(e.target.value)}
-                variant="outlined"
-                size="small"
-              />
-            </FormControl>
+            <InputFilLabelled
+              label="Грейс-период"
+              value={grace}
+              onChange={(e) => setGrace(e.target.value)}
+            />
 
             <FormControl component="fieldset" className="radio-group">
-              <FormLabel component="legend" sx={{ mb: 1 }}>
-                Тип платежей
+              <FormLabel
+                component="legend"
+                sx={{ mb: 1, fontSize: 15, fontWeight: 500, color: '#1A1A1A' }}
+              >
+                Тип платежа
               </FormLabel>
               <ToggleButtonGroup
                 value={type}
@@ -172,33 +158,6 @@ const LoanCalculator = () => {
                 }}
               >
                 <ToggleButton
-                  value="annuity"
-                  sx={{
-                    flex: 1,
-                    color: '#404E67',
-                    backgroundColor: '#fff',
-                    border: '1px solid #d0d0d0',
-                    borderRadius: '8px',
-                    textTransform: 'none',
-                    '&:hover': {
-                      backgroundColor: '#fff',
-                      border: '1px solid #d0d0d0',
-                    },
-                    '&.Mui-selected': {
-                      backgroundColor: '#fe8a7d',
-                      color: '#fff',
-                      border: '1px solid #fe8a7d',
-                      '&:hover': {
-                        backgroundColor: '#fe8a7d',
-                        border: '1px solid #fe8a7d',
-                      },
-                    },
-                  }}
-                >
-                  Равные платежи
-                </ToggleButton>
-
-                <ToggleButton
                   value="diff"
                   sx={{
                     flex: 1,
@@ -207,57 +166,93 @@ const LoanCalculator = () => {
                     border: '1px solid #d0d0d0',
                     borderRadius: '8px',
                     textTransform: 'none',
+                    lineHeight: 'normal',
+                    fontSize: '15px',
+                    fontWeight: 500,
+                    '&:hover': {
+                      backgroundColor: '#fff',
+                      border: '1px solid #2260BC',
+                    },
+                    '&.Mui-selected': {
+                      backgroundColor: '#2260BC',
+                      color: '#fff',
+                      border: '1px solid #2260BC',
+                      '&:hover': {
+                        backgroundColor: '#2260BC',
+                        border: '1px solid #2260BC',
+                      },
+                    },
+                  }}
+                >
+                  С уменьшением платежа
+                </ToggleButton>
+
+                <ToggleButton
+                  value="annuity"
+                  sx={{
+                    flex: 1,
+                    color: '#404E67',
+                    backgroundColor: '#fff',
+                    border: '1px solid #2260BC',
+                    borderRadius: '8px',
+                    textTransform: 'none',
+                    fontSize: '15px',
+                    lineHeight: 'normal',
                     '&:hover': {
                       backgroundColor: '#fff',
                       border: '1px solid #d0d0d0',
                     },
                     '&.Mui-selected': {
-                      backgroundColor: '#fe8a7d',
+                      backgroundColor: '#2260BC',
                       color: '#fff',
-                      border: '1px solid #fe8a7d',
+                      border: '1px solid #2260BC',
                       '&:hover': {
-                        backgroundColor: '#fe8a7d', // оставляем тот же цвет
-                        border: '1px solid #fe8a7d',
+                        backgroundColor: '#2260BC',
+                        border: '1px solid #2260BC',
                       },
                     },
                   }}
                 >
-                  С уменьшением
+                  Равные платежи
                 </ToggleButton>
               </ToggleButtonGroup>
             </FormControl>
           </Box>
-          <Box className="results">
-            <div className="result-row">
-              <span className="result-row-title">Сумма кредита:</span>
-              <span className="result-row-value">{loanAmount.toLocaleString()} BYN</span>
-            </div>
-            <Divider />
-            <div className="result-row">
-              <span className="result-row-title">Переплата:</span>
-              <span className="result-row-value">{overpayment.toFixed(2)} BYN</span>
-            </div>
-            <Divider />
-            <div className="result-row">
-              <span className="result-row-title">Ежемесячный платёж:</span>
-              <span className="result-row-value">
-                {schedule[0]?.payment.toFixed(2)} →{' '}
-                {schedule[schedule.length - 1]?.payment.toFixed(2)} BYN
-              </span>
-            </div>
-            <Divider />
-            <div className="result-row">
-              <span className="result-row-title">Общая сумма выплат:</span>
-              <span className="result-row-value">{totalPayment.toFixed(2)} BYN</span>
+          <Box className="results-container">
+            <Box className="results">
+              <Box className="results-left">
+                <div className="result-row">
+                  <span className="result-row-title">Сумма кредита:</span>
+                  <span className="result-row-value">{formatCurrency(loanAmount)} BYN</span>
+                </div>
+                <div className="result-row">
+                  <span className="result-row-title">Переплата:</span>
+                  <span className="result-row-value">{formatCurrency(overpayment)} BYN</span>
+                </div>
+              </Box>
+              <Box className="results-right">
+                <div className="result-row">
+                  <span className="result-row-title">Ежемесячный платёж:</span>
+                  <span className="result-row-value">
+                    {formatCurrency(schedule[0]?.payment)} →{' '}
+                    {formatCurrency(schedule[schedule.length - 1]?.payment)} BYN
+                  </span>
+                </div>
+                <div className="result-row">
+                  <span className="result-row-title">Общая сумма выплат:</span>
+                  <span className="result-row-value">{formatCurrency(totalPayment)} BYN</span>
+                </div>
+              </Box>
+            </Box>
+
+            <div>
+              <Box className="show-schedule">
+                <span onClick={(e) => handleOpenModal()}>Приблизительный график платежей </span>
+                <img src="/muiIcons/color-arrow-right.png" alt="arrow" />{' '}
+              </Box>
             </div>
           </Box>
         </Box>
-
-        <div>
-          <label className="show-schedule">
-            <span onClick={(e) => handleOpenModal()}>Показать расчет по месяцам</span>
-          </label>
-        </div>
       </Paper>
       <SimpleModal open={open} onClose={() => setOpen(false)} title="Расчёт по месяцам">
         <table className="schedule-table">

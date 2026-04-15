@@ -1,10 +1,12 @@
 import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Home, Search, CreditCard, User } from 'feather-icons-react';
+import { useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
+import { CreditCard, User } from 'feather-icons-react';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import { logout } from '../../RTK/userSlice';
+import UserMenu from './UserMenu';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -15,15 +17,17 @@ const Header = () => {
     navigate('/login');
   };
 
+  const [lang, setLang] = React.useState('ru');
+
   const menuItems = [
-    { label: 'Главная', path: '/dashboard', icon: <Home size={16} /> },
     { label: 'Мои кредиты', path: '/loans', icon: <CreditCard size={16} /> },
     {
       label: 'Кредитный калькулятор',
       path: '/calculator',
       icon: <CalculateIcon fontSize="16px" />,
     },
-    { label: 'Личный кабинет', path: '/profile', icon: <User size={16} /> },
+    { label: 'Вопрос-ответ', path: '/support', icon: <User size={16} /> },
+    { label: 'История запросов', path: '/history', icon: <User size={16} /> },
   ];
 
   const extraMenu = [
@@ -61,9 +65,13 @@ const Header = () => {
           padding: '0 60px',
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '10%' }}>
+        <Box
+          component={RouterLink}
+          to="/dashboard"
+          sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '10%' }}
+        >
           <img
-            src="/FinLogo/FinMarketPlace-blue.png"
+            src="/FinLogo/FinMarketPlace.svg"
             alt="Logo"
             style={{ fontSize: '26px', height: 'auto' }}
           />
@@ -92,7 +100,7 @@ const Header = () => {
             );
           })}
 
-          <Button
+          {/* <Button
             variant="text"
             onClick={handleOpenMore}
             sx={{
@@ -103,9 +111,8 @@ const Header = () => {
             }}
           >
             Ещё
-          </Button>
+          </Button> */}
 
-          {/* Выпадающее Меню */}
           <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMore}>
             {extraMenu.map((item) => (
               <MenuItem key={item.path} onClick={() => handleNavigate(item.path)}>
@@ -115,19 +122,19 @@ const Header = () => {
           </Menu>
         </Box>
 
-        <Button
-          variant="text"
-          color="error"
-          onClick={handleLogout}
+        <Box
           sx={{
-            textTransform: 'none',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            display: 'flex',
+            gap: 4,
           }}
         >
-          Выйти
-        </Button>
+          <UserMenu
+            userName="Мирафзал"
+            onProfile={() => navigate('/profile')}
+            onLogout={() => handleLogout()}
+          />
+          <LanguageSwitcher value={lang} onChange={setLang} />
+        </Box>
       </Box>
     </Box>
   );

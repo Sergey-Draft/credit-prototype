@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Box, TextField, Button, Typography, Link } from '@mui/material';
+import React, { useState } from 'react';
+import { Container, Box, Typography, Link } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginSuccess, saveUser } from '../../RTK/userSlice';
 import { authApi } from '../api/endpoints';
 import { debugLog } from '../../utils/debug/debugLog';
+import { InputFilLabelled, StyledButton } from '../components/ReusableInputs/MainAppStyledElements';
+import { CREDIT_KEY } from '../constants/constants';
 
 // TODO: username change to personal_number
 
 export default function LoginPage() {
-  const [form, setForm] = useState({ username: 'test', password: 'test' });
+  const [form, setForm] = useState({ username: '30110900211442', password: '30110900211442' });
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const tokenLS = useSelector((state) => state.user.accessToken);
-
-  // Если пользователь уже авторизован, перенаправляем на dashboard
-  // useEffect(() => {
-  //   if (localStorage.getItem('accessToken')) {
-  //     const from = location.state?.from?.pathname || '/dashboard';
-  //     navigate(from, { replace: true });
-  //   }
-  // }, [tokenLS, navigate, location]);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -36,9 +29,9 @@ export default function LoginPage() {
       debugLog('res', res);
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
+      localStorage.removeItem(CREDIT_KEY);
       dispatch(loginSuccess(res.data));
       const user = await authApi.getMe();
-      console.log('responseMe', user);
       if (user) {
         localStorage.setItem('user', JSON.stringify(user.data));
         dispatch(saveUser(user.data));
@@ -61,52 +54,78 @@ export default function LoginPage() {
         flexDirection: 'column',
       }}
     >
-      <Box sx={{ p: 4, bgcolor: 'white', boxShadow: 3, borderRadius: 3, width: '100%' }}>
-        <Typography variant="h5" gutterBottom>
-          Вход
-        </Typography>
+      <Box
+        sx={{
+          p: '34px 50px',
+          bgcolor: 'white',
+          borderRadius: '8px',
+          width: '100%',
+          maxWidth: '460px',
+        }}
+      >
+        <Box sx={{ fontSize: '24px', fontWeight: 400 }}>Вход</Box>
         <form onSubmit={handleSubmit}>
-          {/* <TextField
+          <Box
+            sx={{
+              mt: '30px',
+            }}
+          >
+            <InputFilLabelled
               fullWidth
               label="Личный номер"
-              name="personal_number"
-              margin="normal"
+              name="username"
+              value={form.username}
               onChange={handleChange}
-            /> */}
-          <TextField
-            fullWidth
-            label="Личный номер"
-            name="username"
-            margin="normal"
-            value={form.username}
-            onChange={handleChange}
-          />
-          <TextField
-            fullWidth
-            label="Пароль"
-            name="password"
-            type="password"
-            margin="normal"
-            value={form.password}
-            onChange={handleChange}
-          />
-          <Button variant="contained" color="primary" fullWidth type="submit" sx={{ mt: 2 }}>
-            Войти
-          </Button>
-          {message && (
-            <Typography color="error" sx={{ mt: 2 }}>
-              {message}
-            </Typography>
-          )}
+              labelSx={{ fontWeight: 400 }}
+              fieldSx={{ mb: 3 }}
+            />
+            <InputFilLabelled
+              fullWidth
+              label="Пароль"
+              name="password"
+              type="password"
+              value={form.password}
+              onChange={handleChange}
+              labelSx={{ fontWeight: 400 }}
+              showVisibilityToggle
+            />
+            <Box
+              sx={{
+                fontSize: '16px',
+                fontWeight: 400,
+                display: 'flex',
+                justifyContent: 'flex-end',
+                m: '25px 0',
+              }}
+            >
+              Забыли пароль?
+            </Box>
+            <StyledButton variant="contained" text="Войти" type="submit" sx={{ width: '100%' }} />
+            {message && (
+              <Typography color="error" sx={{ mt: 2 }}>
+                {message}
+              </Typography>
+            )}
+          </Box>
         </form>
 
         <Box sx={{ mt: 3, textAlign: 'center' }}>
-          <Typography variant="body2">
+          <Box sx={{ fontSize: '16px', fontWeight: 400 }}>
             Нет аккаунта?{' '}
-            <Link component="button" variant="body2" onClick={() => navigate('/register')}>
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => navigate('/register')}
+              sx={{
+                textDecoration: 'none',
+                color: '#2260BC',
+                fontSize: '16px',
+                fontWeight: 500,
+              }}
+            >
               Зарегистрироваться
             </Link>
-          </Typography>
+          </Box>
         </Box>
       </Box>
     </Container>

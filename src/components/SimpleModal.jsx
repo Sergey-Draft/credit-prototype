@@ -1,17 +1,27 @@
 import React from 'react';
 import { Dialog, DialogTitle, DialogContent, Box, Button } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
-const SimpleModal = ({ open, onClose, title, children, maxWidth = 'md' }) => (
+const SimpleModal = ({
+  open,
+  onClose,
+  title,
+  children,
+  maxWidth = 'md',
+  fullWidth = true,
+  sx = {},
+}) => (
   <Dialog
     open={open}
     onClose={onClose}
     maxWidth={maxWidth}
-    fullWidth
+    fullWidth={fullWidth}
     scroll="paper"
     sx={{
       '& .MuiDialog-paper': {
         borderRadius: '8px',
         padding: '8px',
+        ...sx,
       },
     }}
   >
@@ -28,7 +38,7 @@ const SimpleModal = ({ open, onClose, title, children, maxWidth = 'md' }) => (
       >
         <span>{title}</span>
         <span onClick={onClose} style={{ cursor: 'pointer' }}>
-          Х
+          <CloseIcon />
         </span>
       </DialogTitle>
     )}
@@ -42,12 +52,6 @@ const SimpleModal = ({ open, onClose, title, children, maxWidth = 'md' }) => (
         }}
       >
         {children}
-      </Box>
-
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-        {/* <Button color="primary" onClick={onClose} variant="contained">
-          Закрыть
-        </Button> */}
       </Box>
     </DialogContent>
   </Dialog>

@@ -21,7 +21,7 @@ export default function ProtectedRoute({ children }) {
         try {
           userData = JSON.parse(storedUserRaw);
         } catch (e) {
-          console.warn('Невалидный user в localStorage, очищаем только user (не токен).', e);
+          console.warn('Невалидный user ', e);
           localStorage.removeItem('user');
           userData = null;
         }

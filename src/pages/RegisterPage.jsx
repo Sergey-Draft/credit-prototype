@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Container,
   Box,
-  TextField,
   Button,
   Typography,
   Checkbox,
@@ -16,14 +15,26 @@ import { loginSuccess } from '../../RTK/userSlice';
 import LocalSnackbar from '../components/Snackbar';
 import Loader from '../components/Loader';
 import MessageModal from '../components/MessageModal';
+import { InputFilLabelled, StyledButton } from '../components/ReusableInputs/MainAppStyledElements';
+import SimpleModal from '../components/SimpleModal';
 
 export default function RegisterPage() {
+  // const [form, setForm] = useState({
+  //   personal_number: '',
+  //   phone: '',
+  //   email: '',
+  //   password: '',
+  //   fszn: false,
+  //   dataProcessing: false,
+  // });
+
   const [form, setForm] = useState({
-    personal_number: '',
-    phone: '',
     email: '',
-    fszn: false,
-    dataProcessing: false,
+    phone: '',
+    username: '',
+    password: '',
+    fund: false,
+    agreement: false,
   });
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -32,41 +43,75 @@ export default function RegisterPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const validatePhone = (phone) => {
+    phone = phone.replace(/[^\d+]/g, '');
+
+    if (!phone.startsWith('+')) {
+      phone = `+${phone.replace(/\+/g, '')}`;
+    }
+
+    return phone;
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    if (type === 'tel') {
+      const cleanedPhone = validatePhone(value);
+      setForm((prev) => ({ ...prev, [name]: cleanedPhone }));
+      return;
+    }
     setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+  };
+
+  const validateUsername = (username) => {
+    if (username.length !== 14) {
+      return 'Личный номер (Имя) должен содержать 14 символов';
+    }
+    if (!/^\d{14}$/.test(username)) {
+      return 'Личный номер (Имя) должен состоять только из цифр';
+    }
+
+    const birth = username.slice(1, 7);
+    const dd = +birth.slice(0, 2);
+    const mm = +birth.slice(2, 4);
+
+    if (dd < 1 || dd > 31 || mm < 1 || mm > 12) {
+      return 'Некорректная дата рождения в личном номере ( 2-8 цифры ddmmyy)';
+    }
+
+    return null;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!form.personal_number || !form.phone || !form.password || !form.passport) {
-    //   setMessage('Пожалуйста, заполните обязательные поля');
-    //   console.log(form);
-    //   return;
-    // }
-    console.log(form);
+    // Валидация
+    if (!form.username || !form.phone || !form.password || !form.email) {
+      setMessage('Пожалуйста, заполните обязательные поля');
+      return;
+    }
+
+    const usernameError = validateUsername(form.username);
+    if (usernameError) {
+      setMessage(usernameError);
+      return;
+    }
     setLoading(true);
+    setMessage('');
     try {
-      await authApi.register(form);
+      const response = await authApi.register(form);
+      setLoading(false);
+      setOpen(true);
+      // setRequestMessage(response.data);
+      setRequestMessage('Регистрация прошла успешно');
       setTimeout(() => {
-        setLoading(false);
-        setOpen(true);
-        setRequestMessage(
-          <>
-            Регистрация прошла успешно!{' '}
-            <Link component="button" variant="body2" onClick={() => navigate('/login')}>
-              Войти
-            </Link>
-          </>,
-        );
-      }, 1000);
+        navigate('/login');
+      }, 2000);
     } catch (err) {
       setLoading(false);
       setRequestMessage(
         `❌ Ошибка при регистрации. Попробуйте еще раз. / ${err?.response?.data?.message}`,
       );
       setOpen(true);
-      console.log('ERR', err);
     }
   };
 
@@ -83,86 +128,136 @@ export default function RegisterPage() {
     >
       <Box
         sx={{
-          p: 4,
+          p: '34px 60px',
           bgcolor: 'white',
-          boxShadow: 3,
-          borderRadius: 3,
+          borderRadius: '8px',
           width: '100%',
-          position: 'relative',
+          maxWidth: '480px',
         }}
       >
         <Loader loading={loading} text="" />
-        <MessageModal open={open} message={requestMessage} handleClose={() => setOpen(false)} />
-        {/* <LocalSnackbar open={true} severity={'error'} message={'hello i am snackbar'} /> */}
-        <Typography variant="h5" gutterBottom>
-          Регистрация
-        </Typography>
+
+        <SimpleModal open={open} onClose={() => setOpen(false)} title="Ответ сервера">
+          <pre>{JSON.stringify(requestMessage, null, 2)}</pre>
+        </SimpleModal>
+
+        <Box sx={{ fontSize: '24px', fontWeight: 400 }}>Регистрация</Box>
+
         <form onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            label="Личный номер"
-            name="personal_number"
-            margin="normal"
-            type="number"
-            onChange={handleChange}
-          />
-          <TextField
-            fullWidth
-            label="Телефон"
-            name="phone"
-            type="tel"
-            margin="normal"
-            onChange={handleChange}
-          />
-          <TextField
-            fullWidth
-            label="Email"
-            name="email"
-            margin="normal"
-            type="email"
-            onChange={handleChange}
-          />
-          <TextField
-            fullWidth
-            label="Пароль"
-            name="password"
-            type="password"
-            margin="normal"
-            onChange={handleChange}
-          />
-
-          <FormControlLabel
-            control={<Checkbox name="fszn" checked={form.fszn} onChange={handleChange} />}
-            label="Согласие на получение данных из ФСЗН"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="dataProcessing"
-                checked={form.dataProcessing}
+          <Box
+            sx={{
+              mt: '24px',
+            }}
+          >
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <InputFilLabelled
+                label="Личный номер"
+                name="username"
+                value={form.username}
                 onChange={handleChange}
+                labelSx={{ fontWeight: 400 }}
               />
-            }
-            label="Согласие на обработку персональных данных"
-          />
 
-          <Button variant="contained" color="primary" fullWidth type="submit" sx={{ mt: 2 }}>
-            Зарегистрироваться
-          </Button>
+              <InputFilLabelled
+                label="Телефон"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+                type="tel"
+                pattern="^\\+?[0-9]*$"
+                labelSx={{ fontWeight: 400 }}
+              />
 
-          {message && (
-            <Typography color={message.includes('успешна') ? 'green' : 'error'} sx={{ mt: 2 }}>
-              {message}
-            </Typography>
-          )}
+              <InputFilLabelled
+                label="Email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                type="email"
+                labelSx={{ fontWeight: 400 }}
+              />
 
-          <Box sx={{ mt: 2, textAlign: 'center' }}>
-            <Typography variant="body2">
-              Уже есть аккаунт?{' '}
-              <Link component="button" variant="body2" onClick={() => navigate('/login')}>
-                Войти
-              </Link>
-            </Typography>
+              <InputFilLabelled
+                label="Пароль"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                type="password"
+                labelSx={{ fontWeight: 400 }}
+              />
+            </Box>
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '2px',
+                fontSize: '14px',
+                mt: '20px',
+              }}
+            >
+              <FormControlLabel
+                control={<Checkbox name="fund" checked={form.fund} onChange={handleChange} />}
+                label="Согласие на получение данных из ФСЗН"
+                sx={{
+                  margin: 0,
+                  '& .MuiFormControlLabel-label': {
+                    fontSize: '14px',
+                  },
+                  '& .MuiCheckbox-root': {
+                    padding: '4px 0',
+                  },
+                }}
+              />
+
+              <FormControlLabel
+                control={
+                  <Checkbox name="agreement" checked={form.agreement} onChange={handleChange} />
+                }
+                label="Согласие на обработку персональных данных"
+                sx={{
+                  margin: 0,
+                  '& .MuiFormControlLabel-label': {
+                    fontSize: '14px',
+                  },
+                  '& .MuiCheckbox-root': {
+                    padding: '4px 0',
+                  },
+                }}
+              />
+            </Box>
+
+            <StyledButton
+              variant="contained"
+              text="Зарегистрироваться"
+              type="submit"
+              sx={{ width: '100%', mt: '30px' }}
+            />
+
+            {message && (
+              <Typography color={message.includes('успешна') ? 'green' : 'error'} sx={{ mt: 2 }}>
+                {message}
+              </Typography>
+            )}
+
+            <Box sx={{ mt: 3, textAlign: 'center' }}>
+              <Box sx={{ fontSize: '16px', fontWeight: 400 }}>
+                Уже есть аккаунт?{' '}
+                <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => navigate('/login')}
+                  sx={{
+                    textDecoration: 'none',
+                    color: '#2260BC',
+                    fontSize: '16px',
+                    fontWeight: 500,
+                  }}
+                >
+                  Войти
+                </Link>
+              </Box>
+            </Box>
           </Box>
         </form>
       </Box>

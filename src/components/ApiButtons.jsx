@@ -16,8 +16,6 @@ export default function ApiButtons() {
   const handleClick = (fn, label) => {
     fn()
       .then((res) => {
-        console.log(`${label}:`, res.data);
-
         if (res.data?.accessToken) {
           localStorage.setItem('accessToken', res.data.accessToken);
         }

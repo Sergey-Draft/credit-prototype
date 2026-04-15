@@ -17,7 +17,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import CreditCard from '../components/CreditCard';
 import SimpleModal from '../components/SimpleModal';
-import LoanRequestCard from '../components/LoanRequestCard';
+import LoanRequestCard from '../components/RequestCard';
 
 const banks = [
   { id: 1, name: 'Сбербанк', logo: '/logo/sber.jpg', rating: 4.8, products: 12 },

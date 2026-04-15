@@ -1,11 +1,9 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Home, Search, CreditCard, User } from 'feather-icons-react';
-import { Box, Avatar, Typography, Divider, Button } from '@mui/material';
+import { Box, Avatar, Typography, Divider } from '@mui/material';
 import CalculateIcon from '@mui/icons-material/Calculate';
-import { logout } from '../RTK/userSlice';
-import LoanCalculator from './pages/CalculatorPage';
 
 export default function Sidebar() {
   const navigate = useNavigate();

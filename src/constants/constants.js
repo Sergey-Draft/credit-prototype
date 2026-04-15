@@ -1,0 +1,1 @@
+export const CREDIT_KEY = 'foranx:credit_form_draft';

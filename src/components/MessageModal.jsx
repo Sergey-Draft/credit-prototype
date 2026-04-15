@@ -1,5 +1,5 @@
 import React from 'react';
-import { Backdrop, Box, Typography, IconButton } from '@mui/material';
+import { Box, Typography, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 const MessageModal = ({ open, message, handleClose }) => {

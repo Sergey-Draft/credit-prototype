@@ -53,6 +53,11 @@ api.interceptors.response.use(
       }
     }
 
+    // if user registration still being in processing add mark to error
+    if (error.response?.status === 423) {
+      error.isUserProcessing = true;
+    }
+
     return Promise.reject(error);
   }
 );

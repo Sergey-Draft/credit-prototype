@@ -6,19 +6,18 @@ import RegisterPage from './pages/RegisterPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import LoansPage from './pages/LoansPage';
 import ProfilePage from './pages/ProfilePage';
-import HistoryPage from './pages/HistoryPage';
+import HistoryPage from './pages/RequestHistory';
 import DashboardPage from './pages/DashboardPage';
 import DashboardLayout from './pages/DashboardLayaut';
 import CalculatorPage from './pages/CalculatorPage';
 import ApiButtons from './components/ApiButtons';
-import SupportPage from './components/SupportPage';
+import SupportPage from './pages/SupportPage';
 import DocumentsPage from './components/DocumentsPage';
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public routes */}
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />

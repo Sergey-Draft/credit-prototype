@@ -7,18 +7,6 @@ import App from './App';
 import theme from '../utils/theme/Theme';
 import store from '../RTK/index';
 
-// async function initializeMocks() {
-//   if (import.meta.env.MODE === 'development' || import.meta.env.MODE === 'production') {
-//     const { worker } = await import('./mocks/browser');
-//     await worker.start({
-//       serviceWorker: {
-//         url: '/mockServiceWorker.js',
-//       },
-//       onUnhandledRequest: 'bypass',
-//     });
-//   }
-// }
-
 const root = createRoot(document.getElementById('root'));
 
 root.render(

@@ -5,33 +5,33 @@ export default function BankCard({ logo, logoSmall, name, description }) {
   return (
     <Box
       sx={{
-        width: '240px',
-        height: '220px',
-        perspective: '1000px',
+        width: 240,
+        height: 230, // фиксируем высоту карточки
+        perspective: 1200,
+        '&:hover .flip-card-inner': {
+          transform: 'rotateY(180deg)',
+        },
       }}
     >
       <Box
-        className="flip-inner"
+        className="flip-card-inner"
         sx={{
           position: 'relative',
           width: '100%',
           height: '100%',
+          transition: 'transform 0.7s cubic-bezier(.4,.2,.2,1)',
           transformStyle: 'preserve-3d',
-          transition: 'transform 0.8s',
-          '&:hover': {
-            transform: 'rotateY(180deg)',
-          },
+          willChange: 'transform',
         }}
       >
         {/* FRONT */}
         <Box
           sx={{
             position: 'absolute',
-            width: '100%',
-            height: '100%',
+            inset: 0,
             bgcolor: '#fff',
-            borderRadius: '8px',
-            border: '1px solid #e0e0e0',
+            borderRadius: 2,
+            border: '1px solid #CACACA',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -39,36 +39,58 @@ export default function BankCard({ logo, logoSmall, name, description }) {
             p: 2,
           }}
         >
-          <img src={logo} alt={name} style={{ width: '100%' }} />
+          <Box
+            component="img"
+            src={logo}
+            alt={name}
+            sx={{
+              maxWidth: '100%',
+              maxHeight: '100%',
+              objectFit: 'contain',
+              flexShrink: 0,
+            }}
+          />
         </Box>
 
         {/* BACK */}
         <Box
           sx={{
             position: 'absolute',
-            width: '100%',
-            height: '100%',
+            inset: 0,
             bgcolor: '#fff',
-            borderRadius: '8px',
-            border: '1px solid #e0e0e0',
+            borderRadius: 2,
+            border: '1px solid #CACACA',
             display: 'flex',
             flexDirection: 'column',
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
-            padding: '15px 20px',
+            padding: '0px 20px 15px 20px',
             boxSizing: 'border-box',
+            overflow: 'hidden',
           }}
         >
-          <img
+          <Box
+            component="img"
             src={logoSmall || logo}
             alt={name}
-            style={{ width: '100px', height: 'auto', marginBottom: '5px' }}
+            sx={{
+              height: '30px',
+              m: '10px 0 7px 0',
+              width: 'auto',
+              objectFit: 'contain',
+              alignSelf: 'flex-start',
+            }}
           />
+
           <Typography
             sx={{
-              fontSize: '14px',
-              fontWeight: '400',
-              lineHeight: 'normal',
+              fontSize: 14,
+              fontWeight: 400,
+              display: '-webkit-box',
+              // WebkitLineClamp: 6,
+              // WebkitBoxOrient: 'vertical',
+              lineHeight: 1.1,
+              minHeight: 0,
             }}
           >
             {description}

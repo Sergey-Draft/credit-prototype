@@ -1,6 +1,7 @@
 import { Box, TextField, Button } from '@mui/material';
 import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { StyledButton } from './ReusableInputs/MainAppStyledElements';
 
 const linkStyle = {
   color: '#fff',
@@ -164,21 +165,31 @@ const Footer = () => {
             />
 
             <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
-              <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} />
+              <input
+                type="checkbox"
+                style={{
+                  fontSize: '20px',
+                  width: '20px',
+                  height: '20px',
+                  margin: 0,
+                  cursor: 'pointer',
+                }}
+                checked={agree}
+                onChange={(e) => setAgree(e.target.checked)}
+              />
               <Box sx={{ ml: 1, fontSize: '14px' }}>
                 Я согласен с{' '}
                 <span style={{ color: '#FAE41D' }}>условиями обработки персональных данных</span>
               </Box>
             </Box>
 
-            <Button
+            <StyledButton
               type="submit"
+              text="Отправить запрос"
               sx={{
                 mt: 3,
                 backgroundColor: '#fff',
                 borderRadius: '8px',
-                px: 4,
-                py: 1.2,
                 textTransform: 'none',
                 fontWeight: 500,
                 fontSize: '16px',
@@ -187,9 +198,7 @@ const Footer = () => {
                   backgroundColor: '#f2f2f2',
                 },
               }}
-            >
-              Отправить запрос
-            </Button>
+            />
           </Box>
         </Box>
       </Box>

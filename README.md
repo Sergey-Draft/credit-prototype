@@ -1,16 +1,61 @@
-# React + Vite
+# FMP Client (credit-prototype)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Фронтенд-приложение на **React** для финансового маркетплейса: авторизация, дашборд, кредиты, калькулятор, история заявок, профиль и поддержка.
 
-Currently, two official plugins are available:
+## Стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Vite 7** + **React 19**
+- **MUI** (Material UI), **Emotion**
+- **Redux Toolkit**, **React Router**, **TanStack Query**
+- **Axios** (JWT + refresh в перехватчиках)
+- **MSW** (в проекте есть заготовка моков; по умолчанию не подключена в `main.jsx`)
 
-## React Compiler
+## Требования
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Node.js** (рекомендуется LTS)
+- **Yarn** (в репозитории есть `yarn.lock`)
 
-## Expanding the ESLint configuration
+## Установка и запуск
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+yarn install
+yarn dev
+```
+
+Приложение поднимается через Vite (порт по умолчанию — см. вывод в терминале, обычно `http://localhost:5173`).
+
+## Сборка
+
+```bash
+yarn build
+yarn preview   # локальный просмотр production-сборки
+```
+
+## Линтинг и форматирование
+
+```bash
+yarn lint
+yarn lint:fix
+yarn format
+```
+
+## Бэкенд API
+
+Базовый URL API задаётся в `src/api/axiosConfig.js` (сейчас указывает на локальный/сетевой хост бэкенда). Для другой среды измените `baseURL` и при необходимости эндпоинт refresh-токена в том же файле.
+
+## Git
+
+- **Удалённый репозиторий:** `origin` → `http://gitea.foranx.by/FMP/FMP_Client_Fnx.git`
+- **Основная ветка:** `main` (отслеживает `origin/main`)
+
+Пуш изменений:
+
+```bash
+git add .
+git commit -m "Ваше сообщение"
+git push origin main
+```
+
+---
+
+_Проект создан на базе шаблона React + Vite._

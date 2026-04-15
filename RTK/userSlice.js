@@ -26,8 +26,14 @@ const userSlice = createSlice({
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
     },
+    userLoansHistory: (state, action) => {
+      state.userLoans = action.payload;
+    },
+    userRequestsHistory: (state, action) => {
+      state.userRequests = action.payload;
+    }
   },
 });
 
-export const { loginSuccess, logout, saveUser } = userSlice.actions;
+export const { loginSuccess, logout, saveUser, userLoansHistory, userRequestsHistory } = userSlice.actions;
 export default userSlice.reducer;
